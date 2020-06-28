@@ -7,12 +7,13 @@ package TschauSepp.model;
  * @version 0.1
  * @since 23.06.2020
  */
-public class KarteSchweiz {
+public class Karte {
 
 
     enum Farbe{
 
-        Rosen, Schilten, Eichel, Schellen;
+        Rosen, Schilten, Eichel, Schellen,
+        Ecke, Herz, Schaufel, Kreuz;
 
         private static final Farbe[] farben = Farbe.values();
         public static Farbe getFarbe(int i) {
@@ -23,7 +24,8 @@ public class KarteSchweiz {
 
     enum Wert{
 
-        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, König, As;
+        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, König, As,
+        Zehn, Bauer, Dame;
 
         private static final Wert[] wert = Wert.values();
         public static Wert getWert(int i) {
@@ -36,7 +38,7 @@ public class KarteSchweiz {
     private final Wert wert;
     private int punkte;
 
-    public KarteSchweiz(Farbe farbe, Wert wert, int punkte) {
+    public Karte(Farbe farbe, Wert wert, int punkte) {
         this.farbe = farbe;
         this.wert = wert;
         this.punkte = punkte;

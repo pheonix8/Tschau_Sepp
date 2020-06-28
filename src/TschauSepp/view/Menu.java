@@ -2,6 +2,7 @@ package TschauSepp.view;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,11 +18,16 @@ public class Menu extends JFrame{
 
     BufferedImage bufferedImage = null;
     ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
+
     BackgroundJPanel backgroundPanel;
+
+    JPanel einstellungsPanel;
 
     JButton einstellungen;
 
     JPanel starteinstellungen;
+
+    GridBagConstraints gbc = new GridBagConstraints();
 
     JComboBox deckart;
     String[] art = {
@@ -39,8 +45,6 @@ public class Menu extends JFrame{
             "7 Spieler"
     };
 
-    JPanel playerpanel;
-
     JTextField player1;
     JTextField player2;
     JTextField player3;
@@ -48,6 +52,8 @@ public class Menu extends JFrame{
     JTextField player5;
     JTextField player6;
     JTextField player7;
+
+    JPanel startPanel;
 
     JButton start;
 
@@ -62,11 +68,11 @@ public class Menu extends JFrame{
         }
 
         backgroundPanel = new BackgroundJPanel();
+        einstellungsPanel = new JPanel();
         einstellungen = new JButton();
         starteinstellungen = new JPanel();
         deckart = new JComboBox(art);
         anzspieler = new JComboBox(anzahl);
-        playerpanel = new JPanel();
         player1 = new JTextField();
         player2 = new JTextField();
         player3 = new JTextField();
@@ -74,52 +80,94 @@ public class Menu extends JFrame{
         player5 = new JTextField();
         player6 = new JTextField();
         player7 = new JTextField();
+        startPanel = new JPanel();
         start = new JButton("Start");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         backgroundPanel.setPreferredSize(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
 
-        init();
+        backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);
+        upperPanel();
+        starteinstellungsPanel();
+        lowerPanel();
         pack();
         setVisible(true);
         setResizable(false);
     }
 
-    public static void main(String[] args) {
-        Menu menu = new Menu();
-    }
-
-    public void init(){
-
-        backgroundPanel.setLayout(new BorderLayout());
-
+    public void upperPanel(){
         einstellungen.setBackground(Color.black);
         einstellungen.setIcon(settingsicon);
 
-        backgroundPanel.add(einstellungen, BorderLayout.NORTH);
+        Border upperBorer = BorderFactory.createEmptyBorder(15,30,15,1800);
 
-        starteinstellungen.setLayout(new BorderLayout());
+        einstellungsPanel.setBorder(upperBorer);
+        einstellungsPanel.add(einstellungen);
+        einstellungsPanel.setOpaque(false);
 
-        starteinstellungen.add(deckart, BorderLayout.NORTH);
-        starteinstellungen.add(anzspieler, BorderLayout.CENTER);
-
-        playerpanel.setLayout(new GridLayout(4,2));
-        playerpanel.add(player1);
-        playerpanel.add(player2);
-        playerpanel.add(player3);
-        playerpanel.add(player4);
-        playerpanel.add(player5);
-        playerpanel.add(player6);
-        playerpanel.add(player7);
-
-        starteinstellungen.add(playerpanel, BorderLayout.SOUTH);
-
-        backgroundPanel.add(starteinstellungen, BorderLayout.CENTER);
-
-        backgroundPanel.add(start, BorderLayout.SOUTH);
+        backgroundPanel.add(einstellungsPanel, BorderLayout.NORTH);
     }
 
+    public void starteinstellungsPanel(){
+        starteinstellungen.setLayout(new GridBagLayout());
+
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        starteinstellungen.add(deckart, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        starteinstellungen.add(anzspieler, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        starteinstellungen.add(player1, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 3;
+        starteinstellungen.add(player2, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        starteinstellungen.add(player3, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        starteinstellungen.add(player4, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        starteinstellungen.add(player5, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        starteinstellungen.add(player6, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        starteinstellungen.add(player7, gbc);
+
+        starteinstellungen.setOpaque(false);
+        backgroundPanel.add(starteinstellungen, BorderLayout.CENTER);
+    }
+
+    public void lowerPanel(){
+
+        Border lowerborder = BorderFactory.createEmptyBorder(0, 750, 100, 750);
+
+        startPanel.setLayout(new BorderLayout());
+
+        startPanel.setBorder(lowerborder);
+        startPanel.add(start, BorderLayout.CENTER);
+        startPanel.setOpaque(false);
+
+        backgroundPanel.add(startPanel, BorderLayout.SOUTH);
+    }
+
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+    }
 
     class BackgroundJPanel extends JPanel{
         @Override

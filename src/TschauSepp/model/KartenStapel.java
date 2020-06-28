@@ -1,6 +1,5 @@
 package TschauSepp.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -13,50 +12,48 @@ import java.util.Vector;
  */
 public class KartenStapel {
 
-    private Vector<KarteSchweiz> kartenstapelSchweiz;
-    private Vector<KarteFranzösisch> kartenstapelFranzösisch;
+    private Vector<Karte> kartenstapel;
 
     public KartenStapel() {
-        kartenstapelSchweiz = new Vector<KarteSchweiz>();
-        kartenstapelFranzösisch = new Vector<KarteFranzösisch>();
+        kartenstapel = new Vector<Karte>();
     }
 
     public void generiereDeckSchweiz() {
 
-        KarteSchweiz.Farbe[] farben = KarteSchweiz.Farbe.values();
+        Karte.Farbe[] farben = Karte.Farbe.values();
 
-        for (int i = 0; i < farben.length; i++) {
+        for (int i = 0; i < farben.length-4; i++) {
 
-            KarteSchweiz.Farbe farbe = farben[i];
+            Karte.Farbe farbe = farben[i];
 
             int j = 0;
 
-            KarteSchweiz karteSchweiz = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 6);
-            kartenstapelSchweiz.add(karteSchweiz);
+            Karte karte = new Karte(farbe, Karte.Wert.getWert(j), 6);
+            kartenstapel.add(karte);
             j++;
-            KarteSchweiz karteSchweiz2 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 7);
-            kartenstapelSchweiz.add(karteSchweiz2);
+            Karte karte2 = new Karte(farbe, Karte.Wert.getWert(j), 7);
+            kartenstapel.add(karte2);
             j++;
-            KarteSchweiz karteSchweiz3 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 8);
-            kartenstapelSchweiz.add(karteSchweiz3);
+            Karte karte3 = new Karte(farbe, Karte.Wert.getWert(j), 8);
+            kartenstapel.add(karte3);
             j++;
-            KarteSchweiz karteSchweiz4 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 9);
-            kartenstapelSchweiz.add(karteSchweiz4);
+            Karte karte4 = new Karte(farbe, Karte.Wert.getWert(j), 9);
+            kartenstapel.add(karte4);
             j++;
-            KarteSchweiz karteSchweiz5 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 10);
-            kartenstapelSchweiz.add(karteSchweiz5);
+            Karte karte5 = new Karte(farbe, Karte.Wert.getWert(j), 10);
+            kartenstapel.add(karte5);
             j++;
-            KarteSchweiz karteSchweiz6 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 20);
-            kartenstapelSchweiz.add(karteSchweiz6);
+            Karte karte6 = new Karte(farbe, Karte.Wert.getWert(j), 20);
+            kartenstapel.add(karte6);
             j++;
-            KarteSchweiz karteSchweiz7 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 3);
-            kartenstapelSchweiz.add(karteSchweiz7);
+            Karte karte7 = new Karte(farbe, Karte.Wert.getWert(j), 3);
+            kartenstapel.add(karte7);
             j++;
-            KarteSchweiz karteSchweiz8 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 4);
-            kartenstapelSchweiz.add(karteSchweiz8);
+            Karte karte8 = new Karte(farbe, Karte.Wert.getWert(j), 4);
+            kartenstapel.add(karte8);
             j++;
-            KarteSchweiz karteSchweiz9 = new KarteSchweiz(farbe, KarteSchweiz.Wert.getWert(j), 11);
-            kartenstapelSchweiz.add(karteSchweiz9);
+            Karte karte9 = new Karte(farbe, Karte.Wert.getWert(j), 11);
+            kartenstapel.add(karte9);
             j = 0;
 
         }
@@ -65,57 +62,59 @@ public class KartenStapel {
 
     public void generiereDeckFranzösisch() {
 
-        KarteFranzösisch.Farbe[] farben = KarteFranzösisch.Farbe.values();
+        Karte.Farbe[] farben = Karte.Farbe.values();
 
-        for (int i = 0; i < farben.length; i++) {
+        for (int i = 4; i < farben.length; i++) {
 
-            KarteFranzösisch.Farbe farbe = farben[i];
+            Karte.Farbe farbe = farben[i];
 
-            int j = 0;
-
-            KarteFranzösisch karteFranzösisch = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 6);
-            kartenstapelFranzösisch.add(karteFranzösisch);
-            j++;
-            KarteFranzösisch karteFranzösisch2 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 7);
-            kartenstapelFranzösisch.add(karteFranzösisch2);
-            j++;
-            KarteFranzösisch karteFranzösisch3 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 8);
-            kartenstapelFranzösisch.add(karteFranzösisch3);
-            j++;
-            KarteFranzösisch karteFranzösisch4 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 9);
-            kartenstapelFranzösisch.add(karteFranzösisch4);
-            j++;
-            KarteFranzösisch karteFranzösisch5 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 10);
-            kartenstapelFranzösisch.add(karteFranzösisch5);
-            j++;
-            KarteFranzösisch karteFranzösisch6 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 20);
-            kartenstapelFranzösisch.add(karteFranzösisch6);
-            j++;
-            KarteFranzösisch karteFranzösisch7 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 3);
-            kartenstapelFranzösisch.add(karteFranzösisch7);
-            j++;
-            KarteFranzösisch karteFranzösisch8 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 4);
-            kartenstapelFranzösisch.add(karteFranzösisch8);
-            j++;
-            KarteFranzösisch karteFranzösisch9 = new KarteFranzösisch(farbe, KarteFranzösisch.Wert.getWert(j), 11);
-            kartenstapelFranzösisch.add(karteFranzösisch9);
-            j = 0;
+            Karte karte = new Karte(farbe, Karte.Wert.getWert(0), 6);
+            kartenstapel.add(karte);
+            Karte karte2 = new Karte(farbe, Karte.Wert.getWert(1), 7);
+            kartenstapel.add(karte2);
+            Karte karte3 = new Karte(farbe, Karte.Wert.getWert(2), 8);
+            kartenstapel.add(karte3);
+            Karte karte4 = new Karte(farbe, Karte.Wert.getWert(3), 9);
+            kartenstapel.add(karte4);
+            Karte karte5 = new Karte(farbe, Karte.Wert.getWert(9), 10);
+            kartenstapel.add(karte5);
+            Karte karte6 = new Karte(farbe, Karte.Wert.getWert(10), 20);
+            kartenstapel.add(karte6);
+            Karte karte7 = new Karte(farbe, Karte.Wert.getWert(11), 3);
+            kartenstapel.add(karte7);
+            Karte karte8 = new Karte(farbe, Karte.Wert.getWert(7), 4);
+            kartenstapel.add(karte8);
+            Karte karte9 = new Karte(farbe, Karte.Wert.getWert(8), 11);
+            kartenstapel.add(karte9);
 
         }
 
+
+
     }
 
-    public void kartenMischenFranzösisch(){
-        Collections.shuffle(kartenstapelSchweiz);
+    public void kartenMischen(){
+        Collections.shuffle(kartenstapel);
     }
 
-    public void kartenMischenSchweiz(){
-        Collections.shuffle(kartenstapelSchweiz);
+    public void addKarte(Karte karte){
+        kartenstapel.add(karte);
     }
 
+   public void removeKarte(int index){
+        kartenstapel.remove(index);
+   }
+
+   public Karte getKarte(int index){
+        return kartenstapel.get(index);
+   }
+
+   public int getSize(){
+        return kartenstapel.size();
+   }
 
     @Override
     public String toString() {
-        return "KartenStapel: " + "\n" + kartenstapelSchweiz + "\n" + kartenstapelFranzösisch ;
+        return "KartenStapel: " + "\n" + kartenstapel;
     }
 }

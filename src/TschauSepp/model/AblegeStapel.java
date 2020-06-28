@@ -1,5 +1,7 @@
 package TschauSepp.model;
 
+import java.util.Vector;
+
 /**
  * Project Tschau_Sepp
  *
@@ -9,5 +11,32 @@ package TschauSepp.model;
  */
 public class AblegeStapel {
 
+    private Vector<Karte> ablegestapel;
 
+    public AblegeStapel(){
+
+        ablegestapel = new Vector<Karte>();
+
+    }
+
+    public void addKarte(Karte karte){
+        ablegestapel.add(karte);
+    }
+
+    public void removeallKarten(){
+        ablegestapel.clear();
+    }
+
+    public Karte getKarte(int index){
+        return ablegestapel.get(index);
+    }
+
+    public int getSize(){
+       return ablegestapel.size();
+    }
+
+    @Override
+    public String toString() {
+        return "" + ablegestapel;
+    }
 }
