@@ -27,7 +27,7 @@ public class Menu extends JFrame{
 
     JPanel starteinstellungen;
 
-    GridBagConstraints gbc = new GridBagConstraints();
+    JPanel comboboxPanel;
 
     JComboBox deckart;
     String[] art = {
@@ -44,6 +44,8 @@ public class Menu extends JFrame{
             "6 Spieler",
             "7 Spieler"
     };
+
+    JPanel playerPanel;
 
     JTextField player1;
     JTextField player2;
@@ -71,8 +73,10 @@ public class Menu extends JFrame{
         einstellungsPanel = new JPanel();
         einstellungen = new JButton();
         starteinstellungen = new JPanel();
+        comboboxPanel = new JPanel();
         deckart = new JComboBox(art);
         anzspieler = new JComboBox(anzahl);
+        playerPanel = new JPanel();
         player1 = new JTextField();
         player2 = new JTextField();
         player3 = new JTextField();
@@ -97,7 +101,8 @@ public class Menu extends JFrame{
     }
 
     public void upperPanel(){
-        einstellungen.setBackground(Color.black);
+        einstellungen.setBorderPainted(false);
+        einstellungen.setFocusPainted(false);
         einstellungen.setIcon(settingsicon);
 
         Border upperBorer = BorderFactory.createEmptyBorder(15,30,15,1800);
@@ -110,45 +115,44 @@ public class Menu extends JFrame{
     }
 
     public void starteinstellungsPanel(){
-        starteinstellungen.setLayout(new GridBagLayout());
-
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        starteinstellungen.add(deckart, gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        starteinstellungen.add(anzspieler, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        starteinstellungen.add(player1, gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        starteinstellungen.add(player2, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        starteinstellungen.add(player3, gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 4;
-        starteinstellungen.add(player4, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-        starteinstellungen.add(player5, gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 5;
-        starteinstellungen.add(player6, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 6;
-        starteinstellungen.add(player7, gbc);
-
+        starteinstellungen.setLayout(new BorderLayout());
         starteinstellungen.setOpaque(false);
+
+        Border border = BorderFactory.createEmptyBorder(350, 750, 200, 750);
+
+        starteinstellungen.setBorder(border);
+
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.setRows(2);
+        gridLayout.setColumns(1);
+        gridLayout.setHgap(5);
+        gridLayout.setVgap(5);
+
+        comboboxPanel.setLayout(gridLayout);
+
+        comboboxPanel.setOpaque(false);
+
+        comboboxPanel.add(deckart);
+        comboboxPanel.add(anzspieler);
+
+        gridLayout.setRows(4);
+        gridLayout.setColumns(2);
+        gridLayout.setHgap(10);
+        gridLayout.setVgap(10);
+
+        playerPanel.setLayout(gridLayout);
+        playerPanel.setOpaque(false);
+
+        playerPanel.add(player1);
+        playerPanel.add(player2);
+        playerPanel.add(player3);
+        playerPanel.add(player4);
+        playerPanel.add(player5);
+        playerPanel.add(player6);
+        playerPanel.add(player7);
+
+        starteinstellungen.add(comboboxPanel,BorderLayout.NORTH);
+        starteinstellungen.add(playerPanel, BorderLayout.CENTER);
         backgroundPanel.add(starteinstellungen, BorderLayout.CENTER);
     }
 
