@@ -1,5 +1,7 @@
 package TschauSepp.view;
 
+import TschauSepp.Controller.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -72,18 +74,27 @@ public class Menu extends JFrame{
         backgroundPanel = new BackgroundJPanel();
         einstellungsPanel = new JPanel();
         einstellungen = new JButton();
+        einstellungen.addActionListener(e -> MenuController.onClickEinstellungen());
+
         starteinstellungen = new JPanel();
         comboboxPanel = new JPanel();
         deckart = new JComboBox(art);
         anzspieler = new JComboBox(anzahl);
+        anzspieler.addActionListener(e -> MenuController.onAnzSelection(anzspieler, player3, player4, player5, player6, player7));
+
         playerPanel = new JPanel();
-        player1 = new JTextField();
-        player2 = new JTextField();
-        player3 = new JTextField();
-        player4 = new JTextField();
-        player5 = new JTextField();
-        player6 = new JTextField();
-        player7 = new JTextField();
+        player1 = new JTextField("player1");
+        player2 = new JTextField("player2");
+        player3 = new JTextField("player3");
+        player3.setVisible(false);
+        player4 = new JTextField("player4");
+        player4.setVisible(false);
+        player5 = new JTextField("player5");
+        player5.setVisible(false);
+        player6 = new JTextField("player6");
+        player6.setVisible(false);
+        player7 = new JTextField("player7");
+        player7.setVisible(false);
         startPanel = new JPanel();
         start = new JButton("Start");
 
