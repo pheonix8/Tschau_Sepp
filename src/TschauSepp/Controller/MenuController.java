@@ -1,8 +1,13 @@
 package TschauSepp.Controller;
 
+import TschauSepp.model.AblegeStapel;
+import TschauSepp.model.KartenStapel;
+import TschauSepp.model.Spiel;
+import TschauSepp.model.Spieler;
 import TschauSepp.view.*;
 
 import javax.swing.*;
+import java.util.Vector;
 
 /**
  * Project Tschau_Sepp
@@ -73,6 +78,64 @@ public class MenuController {
 
         }
 
+    }
+
+    public static void onClickStart(JComboBox anzahlspieler, JTextField player1, JTextField player2, JTextField player3, JTextField player4, JTextField player5, JTextField player6, JTextField player7, JComboBox kartendeck, Menu menu){
+
+        Vector<Spieler> allespieler = new Vector<>();
+        KartenStapel kartenStapel = new KartenStapel();
+        AblegeStapel ablegeStapel = new AblegeStapel();
+
+        if (anzahlspieler.getSelectedItem().equals("2 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+        } else if (anzahlspieler.getSelectedItem().equals("3 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+            allespieler.add(new Spieler(player3.getText()));
+        } else if (anzahlspieler.getSelectedItem().equals("4 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+            allespieler.add(new Spieler(player3.getText()));
+            allespieler.add(new Spieler(player4.getText()));
+        } else  if (anzahlspieler.getSelectedItem().equals("5 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+            allespieler.add(new Spieler(player3.getText()));
+            allespieler.add(new Spieler(player4.getText()));
+            allespieler.add(new Spieler(player5.getText()));
+        } else if (anzahlspieler.getSelectedItem().equals("6 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+            allespieler.add(new Spieler(player3.getText()));
+            allespieler.add(new Spieler(player4.getText()));
+            allespieler.add(new Spieler(player5.getText()));
+            allespieler.add(new Spieler(player6.getText()));
+        } else if (anzahlspieler.getSelectedItem().equals("7 Spieler")){
+            allespieler.add(new Spieler(player1.getText()));
+            allespieler.add(new Spieler(player2.getText()));
+            allespieler.add(new Spieler(player3.getText()));
+            allespieler.add(new Spieler(player4.getText()));
+            allespieler.add(new Spieler(player5.getText()));
+            allespieler.add(new Spieler(player6.getText()));
+            allespieler.add(new Spieler(player7.getText()));
+        }
+
+        if (kartendeck.getSelectedItem().equals("Schweizer Deck")){
+            kartenStapel.generiereDeckSchweiz();
+            kartenStapel.generiereDeckSchweiz();
+            kartenStapel.kartenMischen();
+        } else if (kartendeck.getSelectedItem().equals("Französisches Deck")){
+            kartenStapel.generiereDeckFranzösisch();
+            kartenStapel.generiereDeckFranzösisch();
+            kartenStapel.kartenMischen();
+        }
+
+        Spiel spiel = new Spiel(allespieler,kartenStapel,ablegeStapel);
+
+        spiel.spielStart();
+
+        menu.dispose();
     }
 
 

@@ -101,8 +101,12 @@ public class KartenStapel {
         kartenstapel.add(karte);
     }
 
-   public void removeKarte(int index){
+    public void removebyIndex(int index){
         kartenstapel.remove(index);
+    }
+
+   public void removeKarte(Karte karte){
+        kartenstapel.remove(karte);
    }
 
    public Karte getKarte(int index){
