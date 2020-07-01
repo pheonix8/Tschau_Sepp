@@ -1,5 +1,6 @@
 package TschauSepp.model;
 
+import java.util.Observable;
 import java.util.Vector;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Vector;
  * @version 0.1
  * @since 28.06.2020
  */
-public class Spieler {
+public class Spieler extends Observable {
 
     private String name;
     private Vector<Karte> hand;
@@ -44,6 +45,18 @@ public class Spieler {
 
     public Karte getKarte(int index){
         return hand.get(index);
+    }
+
+    public int getHandSize(){
+        return hand.size();
+    }
+
+    public void addPunkte(int punkte){
+        this.punkte += punkte;
+    }
+
+    public int getPunkte(){
+        return punkte;
     }
 
     @Override

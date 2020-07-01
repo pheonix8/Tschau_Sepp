@@ -97,6 +97,7 @@ public class Menu extends JFrame{
         player7.setVisible(false);
         startPanel = new JPanel();
         start = new JButton("Start");
+        start.addActionListener(e -> MenuController.onClickStart(anzspieler,player1,player2,player3,player4,player5,player6,player7,deckart, this));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         backgroundPanel.setPreferredSize(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
@@ -178,10 +179,6 @@ public class Menu extends JFrame{
         startPanel.setOpaque(false);
 
         backgroundPanel.add(startPanel, BorderLayout.SOUTH);
-    }
-
-    public static void main(String[] args) {
-        Menu menu = new Menu();
     }
 
     class BackgroundJPanel extends JPanel{
