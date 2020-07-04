@@ -36,7 +36,7 @@ public class Karte {
 
     private final Farbe farbe;
     private final Wert wert;
-    private int punkte;
+    private final int punkte;
 
     public Karte(Farbe farbe, Wert wert, int punkte) {
         this.farbe = farbe;
@@ -54,10 +54,6 @@ public class Karte {
 
     public int getPunkte() {
         return punkte;
-    }
-
-    public void setPunkte(int punkte) {
-        this.punkte = punkte;
     }
 
     @Override

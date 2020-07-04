@@ -1,5 +1,6 @@
 package TschauSepp.view;
 
+import TschauSepp.Controller.SpielController;
 import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
 
@@ -30,17 +31,19 @@ public class Spielende extends JDialog {
 
     Spiel spiel;
     Spieler spieler;
+    Menu menu;
 
-    public Spielende(Spiel spiel, Spieler spieler) {
+    public Spielende(Spiel spiel, Spieler spieler, Menu menu) {
 
         setTitle("Sieger");
 
         this.spiel = spiel;
         this.spieler = spieler;
+        this.menu = menu;
 
-        try{
+        try {
             bufferedImage = ImageIO.read(new File("Hintergründe/sieger_hintergrund.png"));
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -49,7 +52,9 @@ public class Spielende extends JDialog {
 
         name = new JLabel();
         revanche = new JButton("Revanche");
+        revanche.addActionListener(e -> SpielController.onClickRevanche(spiel, this));
         fertig = new JButton("Fertig");
+        fertig.addActionListener(e -> SpielController.onClickBeenden(this));
 
         backgroundJPanel.setPreferredSize(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
         add(backgroundJPanel);

@@ -4,7 +4,8 @@ import TschauSepp.model.AblegeStapel;
 import TschauSepp.model.KartenStapel;
 import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
-import TschauSepp.view.*;
+import TschauSepp.view.Einstellungen;
+import TschauSepp.view.Menu;
 
 import javax.swing.*;
 import java.util.Vector;
@@ -131,7 +132,7 @@ public class MenuController {
             kartenStapel.kartenMischen();
         }
 
-        Spiel spiel = new Spiel(allespieler,kartenStapel,ablegeStapel);
+        Spiel spiel = new Spiel(allespieler, kartenStapel, ablegeStapel, menu);
 
         spiel.spielStart();
 

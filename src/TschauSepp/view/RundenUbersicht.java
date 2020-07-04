@@ -1,5 +1,7 @@
 package TschauSepp.view;
 
+import TschauSepp.Controller.SpielController;
+import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
 
 import javax.swing.*;
@@ -31,12 +33,14 @@ public class RundenUbersicht extends JDialog {
     JButton weiter;
 
     Vector<Spieler> allespieler;
+    Spiel spiel;
 
-    public RundenUbersicht(Vector<Spieler> allespieler){
+    public RundenUbersicht(Vector<Spieler> allespieler, Spiel spiel) {
 
         setTitle("Rundenübersicht");
 
         this.allespieler = allespieler;
+        this.spiel = spiel;
 
         background = new JPanel();
         player1 = new JTextField();
@@ -55,6 +59,7 @@ public class RundenUbersicht extends JDialog {
         player7.setEditable(false);
 
         weiter = new JButton("Weiter");
+        weiter.addActionListener(e -> SpielController.onClickWeiter(spiel, this));
 
         background.setPreferredSize(new Dimension(500,800));
         add(background);

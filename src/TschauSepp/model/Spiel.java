@@ -1,10 +1,10 @@
 package TschauSepp.model;
 
+import TschauSepp.view.Menu;
 import TschauSepp.view.RundenUbersicht;
 import TschauSepp.view.SpielUI;
 import TschauSepp.view.Spielende;
 
-import javax.swing.*;
 import java.util.Observable;
 import java.util.Vector;
 
@@ -27,33 +27,39 @@ public class Spiel extends Observable {
 
 
     private SpielUI spielUI;
+    private Menu menu;
 
-    public Spiel(Vector<Spieler> alleSpieler, KartenStapel kartenStapel, AblegeStapel ablegeStapel) {
+    public Spiel(Vector<Spieler> alleSpieler, KartenStapel kartenStapel, AblegeStapel ablegeStapel, Menu menu) {
 
         this.alleSpieler = alleSpieler;
         this.kartenStapel = kartenStapel;
         this.ablegeStapel = ablegeStapel;
+        this.menu = menu;
 
-        spieltImUhrzeigersinn = true;
+        spieltImUhrzeigersinn = false;
         aktuellerSpieler = alleSpieler.get(0);
     }
 
 
     public void spielStart() {
 
-        maxPunktzahl = 200;
+        maxPunktzahl = 20;
 
-        RundeStarten();
+        for (int i = 0; i < alleSpieler.size(); i++) {
+            alleSpieler.get(i).setPunkte(0);
+        }
+
+        rundeStarten();
 
     }
 
     public void nächsterSpieler() {
 
-        if (spieltImUhrzeigersinn) {
-            if ( alleSpieler.indexOf(aktuellerSpieler)+1 > alleSpieler.size()){
+        if (!spieltImUhrzeigersinn) {
+            if (alleSpieler.indexOf(aktuellerSpieler) + 1 == alleSpieler.size()) {
                 setAktuellerSpieler(alleSpieler.get(0));
             } else {
-                setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler)+1));
+                setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) + 1));
             }
         } else {
             for (int i = 0; i < alleSpieler.size(); i++) {
@@ -73,7 +79,7 @@ public class Spiel extends Observable {
 
     }
 
-    public void RundeStarten(){
+    public void rundeStarten() {
 
         for (int i = 0; i < ablegeStapel.getSize(); i++) {
 
@@ -88,6 +94,7 @@ public class Spiel extends Observable {
             for (int j = 0; j < alleSpieler.get(i).getHandSize(); j++) {
                 kartenStapel.addKarte(alleSpieler.get(i).getKarte(j));
             }
+
         }
 
         for (int i = 0; i < alleSpieler.size(); i++) {
@@ -102,7 +109,7 @@ public class Spiel extends Observable {
 
             for (int j = 0; j < 7; j++) {
                 alleSpieler.get(i).addKarte(kartenStapel.getKarte(0));
-                kartenStapel.removebyIndex(i);
+                kartenStapel.removebyIndex(0);
             }
 
         }
@@ -113,15 +120,22 @@ public class Spiel extends Observable {
 
         setAktuellerSpieler(alleSpieler.get(0));
 
-        spielUI = new SpielUI(this,alleSpieler);
+        spielUI = new SpielUI(this, alleSpieler);
 
     }
 
-    public void rundeBeenden(Spieler spieler){
+    public void seppSagen(Spieler spieler) {
+
+        if (spieler.getHandSize() == 2) {
+            spieler.setHatTschau(true);
+        }
+    }
+
+    public void rundeBeenden(Spieler spieler) {
 
         for (int i = 0; i < alleSpieler.size(); i++) {
 
-            if (!alleSpieler.get(i).equals(spieler)){
+            if (!alleSpieler.get(i).equals(spieler)) {
                 for (int j = 0; j < alleSpieler.get(i).getHandSize(); j++) {
 
                     spieler.addPunkte(alleSpieler.get(i).getKarte(j).getPunkte());
@@ -136,19 +150,13 @@ public class Spiel extends Observable {
         if (spieler.getPunkte() >= maxPunktzahl){
             spielBeenden(spieler);
         } else {
-            RundenUbersicht rundenUbersicht = new RundenUbersicht(alleSpieler);
+            RundenUbersicht rundenUbersicht = new RundenUbersicht(alleSpieler, this);
         }
     }
 
     public void spielBeenden(Spieler spieler){
 
-        Spielende spielende = new Spielende(this,spieler);
-
-    }
-
-    public Boolean istKarteLegbar(Karte karte){
-
-        return karte.getFarbe() == obersteKarte.getFarbe() || karte.getWert() == obersteKarte.getWert();
+        Spielende spielende = new Spielende(this, spieler, menu);
 
     }
 

@@ -1,13 +1,12 @@
 package TschauSepp.view;
 
 import TschauSepp.Controller.SpielController;
-import TschauSepp.model.*;
-
+import TschauSepp.model.Spiel;
+import TschauSepp.model.Spieler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -138,12 +137,15 @@ public class SpielUI extends JFrame implements Observer{
         
         rightbuttonPanel = new JPanel();
         tschau = new JButton("Tschau");
+        tschau.addActionListener(e -> SpielController.onClickTschau(spieler, spiel, tschau));
         sepp = new JButton("Sepp");
+        sepp.addActionListener(e -> SpielController.onClickSepp(spieler, spiel, sepp));
 
         leftbuttonPanel = new JPanel();
         setzen = new JButton("Setzen");
-        setzen.addActionListener(e -> SpielController.onClickSetzen(spieler,spieler.getKarte(kartenListe.getSelectedIndex()),spiel));
+        setzen.addActionListener(e -> SpielController.onClickSetzen(spieler, kartenListe, spiel));
         ziehen = new JButton("Ziehen");
+        ziehen.addActionListener(e -> SpielController.onClickZiehen(spiel, tschau, sepp));
         spiel.getAktuellerSpieler().addObserver(this);
         spiel.addObserver(this);
 
@@ -308,16 +310,16 @@ public class SpielUI extends JFrame implements Observer{
         centerTopPanel.setPreferredSize(new Dimension(412,120));
 
 
-        if (allespieler.size() >= 4){
+        if (allespieler.size() >= 4) {
             centerTopPanel.add(obererSpieler1);
 
-            URL path2 = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon3weiter(allespieler,spieler)+"_up.png");
-            ImageIcon imageIcon2 = new ImageIcon(path2);
-            Image image2 = imageIcon2.getImage();
-            Image newimg2 = image2.getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH);
-            imageIcon2 = new ImageIcon(newimg2);
+            URL pathupa = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon3weiter(allespieler, spieler) + "_up.png");
+            ImageIcon imageIconupa = new ImageIcon(pathupa);
+            Image imageupa = imageIconupa.getImage();
+            Image newimgupa = imageupa.getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH);
+            imageIconupa = new ImageIcon(newimgupa);
 
-            obererSpieler1.setIcon(imageIcon2);
+            obererSpieler1.setIcon(imageIconupa);
             obererSpieler1.setVerticalAlignment(JLabel.CENTER);
             obererSpieler1.setHorizontalAlignment(JLabel.CENTER);
 
@@ -325,12 +327,12 @@ public class SpielUI extends JFrame implements Observer{
         if (allespieler.size() >= 5) {
             centerTopPanel.add(obererSpieler2);
 
-            URL path = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon4weiter(allespieler,spieler)+"_up.png");
-            ImageIcon imageIcon = new ImageIcon(path);
-            Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH);
-            imageIcon = new ImageIcon(newimg);
-            obererSpieler2.setIcon(imageIcon);
+            URL pathupb = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon4weiter(allespieler, spieler) + "_up.png");
+            ImageIcon imageIconupb = new ImageIcon(pathupb);
+            Image imageupb = imageIconupb.getImage();
+            Image newimgupb = imageupb.getScaledInstance(200, 120, java.awt.Image.SCALE_SMOOTH);
+            imageIconupb = new ImageIcon(newimgupb);
+            obererSpieler2.setIcon(imageIconupb);
             obererSpieler2.setVerticalAlignment(JLabel.CENTER);
             obererSpieler2.setHorizontalAlignment(JLabel.CENTER);
 
@@ -367,65 +369,64 @@ public class SpielUI extends JFrame implements Observer{
         kartenstapel.setVerticalAlignment(JLabel.CENTER);
         kartenstapel.setHorizontalAlignment(JLabel.CENTER);
 
-        GridLayout grid21layout = new GridLayout(2,1);
+        GridLayout grid21layout = new GridLayout(2, 1);
 
         centerLeftPanel.setLayout(grid21layout);
         centerLeftPanel.setOpaque(false);
 
-        centerLeftPanel.add(linkerSpieler1);
+        if (allespieler.size() >= 3) {
 
-        URL path3 = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon1weiter(allespieler,spieler)+".png");
-        ImageIcon imageIcon = new ImageIcon(path3);
-        Image image3 = imageIcon.getImage();
-        Image newimg3 = image3.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(newimg3);
-        linkerSpieler1.setIcon(imageIcon);
-        linkerSpieler1.setVerticalAlignment(JLabel.CENTER);
-        linkerSpieler1.setHorizontalAlignment(JLabel.CENTER);
+            centerLeftPanel.add(linkerSpieler1);
 
-        if (allespieler.size() >= 3){
-            centerLeftPanel.add(linkerSpieler2);
-
-            URL path4 = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon2weiter(allespieler,spieler)+".png");
-            ImageIcon imageIcon2 = new ImageIcon(path4);
-            Image image4 = imageIcon2.getImage();
-            Image newimg4 = image4.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
-            imageIcon2 = new ImageIcon(newimg4);
-            linkerSpieler2.setIcon(imageIcon2);
-            linkerSpieler2.setVerticalAlignment(JLabel.CENTER);
-            linkerSpieler2.setHorizontalAlignment(JLabel.CENTER);
-
+            URL pathlu = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon2weiter(allespieler, spieler) + ".png");
+            ImageIcon imageIconlu = new ImageIcon(pathlu);
+            Image imagelu = imageIconlu.getImage();
+            Image newimglu = imagelu.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
+            imageIconlu = new ImageIcon(newimglu);
+            linkerSpieler1.setIcon(imageIconlu);
+            linkerSpieler1.setVerticalAlignment(JLabel.CENTER);
+            linkerSpieler1.setHorizontalAlignment(JLabel.CENTER);
         }
 
+        centerLeftPanel.add(linkerSpieler2);
+
+        URL pathld = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon1weiter(allespieler, spieler) + ".png");
+        ImageIcon imageIconld = new ImageIcon(pathld);
+        Image imageld = imageIconld.getImage();
+        Image newimgld = imageld.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
+        imageIconld = new ImageIcon(newimgld);
+        linkerSpieler2.setIcon(imageIconld);
+        linkerSpieler2.setVerticalAlignment(JLabel.CENTER);
+        linkerSpieler2.setHorizontalAlignment(JLabel.CENTER);
 
         centerRightPanel.setLayout(grid21layout);
         centerRightPanel.setOpaque(false);
 
-        if (allespieler.size() >= 6){
+        if (allespieler.size() >= 6) {
 
             centerRightPanel.add(rechterSpieler1);
 
-            URL path4 = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon5weiter(allespieler,spieler)+"_right.png");
-            ImageIcon imageIcon2 = new ImageIcon(path4);
-            Image image4 = imageIcon2.getImage();
-            Image newimg4 = image4.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
-            imageIcon2 = new ImageIcon(newimg4);
-            rechterSpieler1.setIcon(imageIcon2);
+            URL pathru = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon5weiter(allespieler, spieler) + "_right.png");
+            ImageIcon imageIconru = new ImageIcon(pathru);
+            Image imageru = imageIconru.getImage();
+            Image newimgru = imageru.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
+            imageIconru = new ImageIcon(newimgru);
+            rechterSpieler1.setIcon(imageIconru);
             rechterSpieler1.setVerticalAlignment(JLabel.CENTER);
             rechterSpieler1.setHorizontalAlignment(JLabel.CENTER);
         }
 
 
-        if (allespieler.size() >= 7){
+        if (allespieler.size() >= 7) {
 
             centerRightPanel.add(rechterSpieler2);
 
-            URL path4 = getClass().getResource("../img/Background/Background-"+SpielController.getAnzkartenVon6weiter(allespieler,spieler)+"_right.png");
-            ImageIcon imageIcon2 = new ImageIcon(path4);
-            Image image4 = imageIcon2.getImage();
-            Image newimg4 = image4.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
-            imageIcon2 = new ImageIcon(newimg4);
-            rechterSpieler2.setIcon(imageIcon2);
+            URL pathrd = getClass().getResource("../img/Background/Background-" + SpielController.getAnzkartenVon6weiter(allespieler, spieler) + "_right.png");
+            ImageIcon imageIconrd = new ImageIcon(pathrd);
+            Image imagerd = imageIconrd.getImage();
+            Image newimgrd = imagerd.getScaledInstance(120, 200, java.awt.Image.SCALE_SMOOTH);
+            imageIconrd = new ImageIcon(newimgrd);
+            rechterSpieler2.setIcon(imageIconrd);
             rechterSpieler2.setVerticalAlignment(JLabel.CENTER);
             rechterSpieler2.setHorizontalAlignment(JLabel.CENTER);
 
@@ -503,7 +504,6 @@ public class SpielUI extends JFrame implements Observer{
             defaultListModel.addElement(imageIcon2);
         }
 
-
     }
 
     @Override
@@ -512,11 +512,13 @@ public class SpielUI extends JFrame implements Observer{
         spieler = spiel.getAktuellerSpieler();
         name.setText(spieler.getName());
 
+        upperPanel.removeAll();
+        centerPanel.removeAll();
+        lowerPanel.removeAll();
+
         drawUpperpanel();
         drawCenterpanel();
-
-        ladebilder();
-        kartenListe.updateUI();
+        drawLowerpanel();
 
     }
 
