@@ -1,7 +1,5 @@
 package TschauSepp.model;
 
-import TschauSepp.view.Farbwahl;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -78,8 +76,6 @@ public class Spieler extends Observable {
      */
     public void KarteLegen(Karte karte, Spiel spiel, Spieler spieler) {
 
-        if (karte.getPunkte() != 20) {
-
             if (karte.getFarbe() == spiel.getObersteKarte().getFarbe() || karte.getWert() == spiel.getObersteKarte().getWert()) {
 
                 if (spiel.getAktuellerSpieler().getHandSize() == 2 && !spiel.getAktuellerSpieler().isHatTschau()) {
@@ -108,11 +104,6 @@ public class Spieler extends Observable {
                     spiel.nächsterSpieler();
                 }
             }
-        } else {
-
-            Farbwahl farbwahl = new Farbwahl(spiel);
-
-        }
     }
 
     /**

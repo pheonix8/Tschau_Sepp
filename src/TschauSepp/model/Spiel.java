@@ -27,6 +27,9 @@ public class Spiel extends Observable {
     private boolean aussetzen;
     private boolean keinDoppelbauer;
 
+    private boolean aus;
+    private int auslassen;
+
     private boolean spieltImUhrzeigersinn;
     private Spieler aktuellerSpieler;
     private Vector<Spieler> alleSpieler;
@@ -54,6 +57,7 @@ public class Spiel extends Observable {
 
         spieltImUhrzeigersinn = false;
         aktuellerSpieler = alleSpieler.get(0);
+        aus = true;
     }
 
 
@@ -82,10 +86,15 @@ public class Spiel extends Observable {
     public void nächsterSpieler() {
 
         if (getObersteKarte().getPunkte() != 11) {
-            int auslassen = 1;
+            auslassen = 1;
 
             if (getObersteKarte().getPunkte() == 8) {
-                auslassen = 2;
+                if (aus) {
+                    auslassen = 2;
+                    aus = false;
+                }
+
+
             }
 
             for (int i = 0; i < auslassen; i++) {
@@ -107,6 +116,9 @@ public class Spiel extends Observable {
 
         setChanged();
         notifyObservers(aktuellerSpieler);
+        if (auslassen == 1) {
+            aus = true;
+        }
     }
 
     /**
