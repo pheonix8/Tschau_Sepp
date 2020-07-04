@@ -20,19 +20,53 @@ import java.io.File;
  */
 public class Spielende extends JDialog {
 
+    /**
+     * The Buffered image.
+     */
     BufferedImage bufferedImage = null;
 
+    /**
+     * The Background j panel.
+     */
     BackgroundJPanel backgroundJPanel;
+    /**
+     * The Button panel.
+     */
     JPanel buttonPanel;
 
+    /**
+     * The Name.
+     */
     JLabel name;
+    /**
+     * The Revanche.
+     */
     JButton revanche;
+    /**
+     * The Fertig.
+     */
     JButton fertig;
 
+    /**
+     * The Spiel.
+     */
     Spiel spiel;
+    /**
+     * The Spieler.
+     */
     Spieler spieler;
+    /**
+     * The Menu.
+     */
     Menu menu;
 
+    /**
+     * Instantiates a new Spielende.
+     *
+     * @param spiel   the spiel
+     * @param spieler the spieler
+     * @param menu    the menu
+     */
     public Spielende(Spiel spiel, Spieler spieler, Menu menu) {
 
         setTitle("Sieger");
@@ -65,9 +99,12 @@ public class Spielende extends JDialog {
 
     }
 
-    public void init(){
+    /**
+     * Init.
+     */
+    public void init() {
 
-        backgroundJPanel.setLayout(new BorderLayout(10,10));
+        backgroundJPanel.setLayout(new BorderLayout(10, 10));
 
         backgroundJPanel.add(name, BorderLayout.CENTER);
         name.setText(spieler.getName());
@@ -91,12 +128,14 @@ public class Spielende extends JDialog {
         backgroundJPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 
-
     }
 
-    class BackgroundJPanel extends JPanel{
+    /**
+     * The type Background j panel.
+     */
+    class BackgroundJPanel extends JPanel {
         @Override
-        public void paintComponent(Graphics g){
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(bufferedImage, 0, 0, this);
         }

@@ -1,9 +1,6 @@
 package TschauSepp.Controller;
 
-import TschauSepp.model.AblegeStapel;
-import TschauSepp.model.KartenStapel;
-import TschauSepp.model.Spiel;
-import TschauSepp.model.Spieler;
+import TschauSepp.model.*;
 import TschauSepp.view.Einstellungen;
 import TschauSepp.view.Menu;
 
@@ -19,13 +16,45 @@ import java.util.Vector;
  */
 public class MenuController {
 
-    public static void onClickEinstellungen(){
-        Einstellungen einstellungen = new Einstellungen();
+    /**
+     * On click einstellungen.
+     *
+     * @param saveData the save data
+     */
+    public static void onClickEinstellungen(SaveData saveData) {
+        Einstellungen einstellungen = new Einstellungen(saveData);
     }
 
-    public static void onAnzSelection(JComboBox anzspieler, JTextField player3, JTextField player4, JTextField player5, JTextField player6, JTextField player7){
+    /**
+     * Save einstellungen.
+     *
+     * @param einstellungen       the einstellungen
+     * @param nurEineRunde        the nur eine runde
+     * @param maxPunkte           the max punkte
+     * @param freiwilligeAufnahme the freiwillige aufnahme
+     * @param aussetzen           the aussetzen
+     * @param keinDoppelbauer     the kein doppelbauer
+     * @param saveData            the save data
+     */
+    public static void saveEinstellungen(Einstellungen einstellungen, JCheckBox nurEineRunde, JTextField maxPunkte, JCheckBox freiwilligeAufnahme, JCheckBox aussetzen, JCheckBox keinDoppelbauer, SaveData saveData) {
+        saveData.createfile();
+        saveData.savefile(nurEineRunde, maxPunkte, freiwilligeAufnahme, aussetzen, keinDoppelbauer);
+        einstellungen.dispose();
+    }
 
-        if (anzspieler.getSelectedIndex() == 0){
+    /**
+     * On anz selection.
+     *
+     * @param anzspieler the anzspieler
+     * @param player3    the player 3
+     * @param player4    the player 4
+     * @param player5    the player 5
+     * @param player6    the player 6
+     * @param player7    the player 7
+     */
+    public static void onAnzSelection(JComboBox anzspieler, JTextField player3, JTextField player4, JTextField player5, JTextField player6, JTextField player7) {
+
+        if (anzspieler.getSelectedIndex() == 0) {
 
             player3.setVisible(false);
             player4.setVisible(false);
@@ -33,7 +62,7 @@ public class MenuController {
             player6.setVisible(false);
             player7.setVisible(false);
 
-        } else if (anzspieler.getSelectedIndex() == 1){
+        } else if (anzspieler.getSelectedIndex() == 1) {
 
             player3.setVisible(true);
 
@@ -81,25 +110,39 @@ public class MenuController {
 
     }
 
-    public static void onClickStart(JComboBox anzahlspieler, JTextField player1, JTextField player2, JTextField player3, JTextField player4, JTextField player5, JTextField player6, JTextField player7, JComboBox kartendeck, Menu menu){
+    /**
+     * On click start.
+     *
+     * @param anzahlspieler the anzahlspieler
+     * @param player1       the player 1
+     * @param player2       the player 2
+     * @param player3       the player 3
+     * @param player4       the player 4
+     * @param player5       the player 5
+     * @param player6       the player 6
+     * @param player7       the player 7
+     * @param kartendeck    the kartendeck
+     * @param menu          the menu
+     */
+    public static void onClickStart(JComboBox anzahlspieler, JTextField player1, JTextField player2, JTextField player3, JTextField player4, JTextField player5, JTextField player6, JTextField player7, JComboBox kartendeck, Menu menu) {
 
         Vector<Spieler> allespieler = new Vector<>();
         KartenStapel kartenStapel = new KartenStapel();
         AblegeStapel ablegeStapel = new AblegeStapel();
 
-        if (anzahlspieler.getSelectedItem().equals("2 Spieler")){
+        if (anzahlspieler.getSelectedItem().equals("2 Spieler")) {
             allespieler.add(new Spieler(player1.getText()));
             allespieler.add(new Spieler(player2.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("3 Spieler")){
+        } else if (anzahlspieler.getSelectedItem().equals("3 Spieler")) {
             allespieler.add(new Spieler(player1.getText()));
             allespieler.add(new Spieler(player2.getText()));
             allespieler.add(new Spieler(player3.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("4 Spieler")){
+        } else if (anzahlspieler.getSelectedItem().equals("4 Spieler")) {
             allespieler.add(new Spieler(player1.getText()));
             allespieler.add(new Spieler(player2.getText()));
             allespieler.add(new Spieler(player3.getText()));
             allespieler.add(new Spieler(player4.getText()));
-        } else  if (anzahlspieler.getSelectedItem().equals("5 Spieler")){
+        } else if (anzahlspieler.getSelectedItem().equals("5 Spieler")) {
             allespieler.add(new Spieler(player1.getText()));
             allespieler.add(new Spieler(player2.getText()));
             allespieler.add(new Spieler(player3.getText()));

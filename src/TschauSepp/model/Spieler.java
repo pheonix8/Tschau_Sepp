@@ -1,5 +1,7 @@
 package TschauSepp.model;
 
+import TschauSepp.view.Farbwahl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -22,6 +24,11 @@ public class Spieler extends Observable {
     private boolean hatSepp;
     private boolean check;
 
+    /**
+     * Instantiates a new Spieler.
+     *
+     * @param name the name
+     */
     public Spieler(String name) {
         this.name = name;
         hand = new Vector<Karte>();
@@ -32,6 +39,12 @@ public class Spieler extends Observable {
         check = true;
     }
 
+    /**
+     * Tschau sagen.
+     *
+     * @param spiel  the spiel
+     * @param tschau the tschau
+     */
     public void tschauSagen(Spiel spiel, JButton tschau) {
         isCheckFalse(spiel);
         if (!check && spiel.getAktuellerSpieler().getHandSize() == 2) {
@@ -41,6 +54,12 @@ public class Spieler extends Observable {
         }
     }
 
+    /**
+     * Sepp sagen.
+     *
+     * @param spiel the spiel
+     * @param sepp  the sepp
+     */
     public void seppSagen(Spiel spiel, JButton sepp) {
         isCheckFalse(spiel);
         if (!check && spiel.getAktuellerSpieler().getHandSize() == 1) {
@@ -50,34 +69,68 @@ public class Spieler extends Observable {
         }
     }
 
-    public void KarteLegen(Karte karte, Spiel spiel) {
+    /**
+     * Karte legen.
+     *
+     * @param karte   the karte
+     * @param spiel   the spiel
+     * @param spieler the spieler
+     */
+    public void KarteLegen(Karte karte, Spiel spiel, Spieler spieler) {
 
-        if (karte.getFarbe() == spiel.getObersteKarte().getFarbe() || karte.getWert() == spiel.getObersteKarte().getWert()) {
+        if (karte.getPunkte() != 20) {
 
-            if (spiel.getAktuellerSpieler().getHandSize() == 2 && !spiel.getAktuellerSpieler().isHatTschau()) {
-                spiel.getAktuellerSpieler().bestrafung(spiel);
+            if (karte.getFarbe() == spiel.getObersteKarte().getFarbe() || karte.getWert() == spiel.getObersteKarte().getWert()) {
+
+                if (spiel.getAktuellerSpieler().getHandSize() == 2 && !spiel.getAktuellerSpieler().isHatTschau()) {
+                    spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
+                }
+
+                if (spiel.getAktuellerSpieler().getHandSize() == 1 && !spiel.getAktuellerSpieler().isHatSepp()) {
+                    spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
+                }
+
+                spiel.getAblegeStapel().addKarte(karte);
+                hand.remove(karte);
+                spiel.setObersteKarte(karte);
+
+                if (karte.getPunkte() == 10) {
+                    if (spiel.isSpieltImUhrzeigersinn()) {
+                        spiel.setSpieltImUhrzeigersinn(false);
+                    } else {
+                        spiel.setSpieltImUhrzeigersinn(true);
+                    }
+                }
+
+                if (hand.size() == 0) {
+                    spiel.rundeBeenden(this);
+                } else {
+                    spiel.nächsterSpieler();
+                }
             }
+        } else {
 
-            if (spiel.getAktuellerSpieler().getHandSize() == 1 && !spiel.getAktuellerSpieler().isHatSepp()) {
-                spiel.getAktuellerSpieler().bestrafung(spiel);
-            }
+            Farbwahl farbwahl = new Farbwahl(spiel);
 
-            spiel.getAblegeStapel().addKarte(karte);
-            hand.remove(karte);
-            spiel.setObersteKarte(karte);
-
-            if (hand.size() == 0) {
-                spiel.rundeBeenden(this);
-            } else {
-                spiel.nächsterSpieler();
-            }
         }
     }
 
-    public void KarteNehmen(Spiel spiel, JButton tschau, JButton sepp) {
+    /**
+     * Karte nehmen.
+     *
+     * @param spiel   the spiel
+     * @param spieler the spieler
+     * @param tschau  the tschau
+     * @param sepp    the sepp
+     */
+    public void KarteNehmen(Spiel spiel, Spieler spieler, JButton tschau, JButton sepp) {
 
         check = true;
         isCheckFalse(spiel);
+
+        if (spiel.isFreiwilligeAufnahme()) {
+            check = true;
+        }
 
         if (check) {
             if (isHatTschau()) {
@@ -90,94 +143,172 @@ public class Spieler extends Observable {
                 sepp.setForeground(Color.black);
             }
 
-            hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
-            spiel.getKartenStapel().removeKarte(hand.get(hand.size() - 1));
+            spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
+            spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
 
             setChanged();
-            notifyObservers();
+            notifyObservers(spieler);
 
-            check = true;
-            isCheckFalse(spiel);
-
-            if (check) {
+            if (spiel.isAussetzen()) {
                 spiel.nächsterSpieler();
+            } else {
+                check = true;
+                isCheckFalse(spiel);
+
+                if (check) {
+                    spiel.nächsterSpieler();
+                }
             }
         }
     }
 
-    public void bestrafung(Spiel spiel) {
+    /**
+     * Bestrafung.
+     *
+     * @param spiel   the spiel
+     * @param spieler the spieler
+     */
+    public void bestrafung(Spiel spiel, Spieler spieler) {
 
         if (spiel.getAktuellerSpieler().getHandSize() == 1) {
             for (int i = 0; i < 3; i++) {
-                hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
-                spiel.getKartenStapel().removeKarte(hand.get(hand.size() - 1));
+                spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
+                spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
             }
-            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst 4 Karten aufnehmen, das nächste Mal SEPP sagen", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else {
-            for (int i = 0; i < 1; i++) {
-                hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
-                spiel.getKartenStapel().removeKarte(hand.get(hand.size() - 1));
+            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst Karten aufnehmen, das nächste Mal SEPP sagen", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (spiel.getAktuellerSpieler().getHandSize() == 2) {
+            for (int i = 0; i < 2; i++) {
+                spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
+                spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
             }
-            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst 3 Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
-        setChanged();
-        notifyObservers();
         spiel.nächsterSpieler();
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Add karte.
+     *
+     * @param karte the karte
+     */
     public void addKarte(Karte karte) {
         hand.add(karte);
     }
 
+    /**
+     * Remove karte.
+     *
+     * @param karte the karte
+     */
     public void removeKarte(Karte karte) {
         hand.remove(karte);
     }
 
+    /**
+     * Removeall karten.
+     */
     public void removeallKarten() {
         hand.clear();
     }
 
+    /**
+     * Gets karte.
+     *
+     * @param index the index
+     * @return the karte
+     */
     public Karte getKarte(int index) {
         return hand.get(index);
     }
 
+    /**
+     * Gets hand size.
+     *
+     * @return the hand size
+     */
     public int getHandSize() {
         return hand.size();
     }
 
+    /**
+     * Add punkte.
+     *
+     * @param punkte the punkte
+     */
     public void addPunkte(int punkte) {
         this.punkte += punkte;
     }
 
+    /**
+     * Gets punkte.
+     *
+     * @return the punkte
+     */
     public int getPunkte() {
         return punkte;
     }
 
+    /**
+     * Is hat tschau boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHatTschau() {
         return hatTschau;
     }
 
+    /**
+     * Sets hat tschau.
+     *
+     * @param hatTschau the hat tschau
+     */
     public void setHatTschau(boolean hatTschau) {
         this.hatTschau = hatTschau;
     }
 
+    /**
+     * Is hat sepp boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHatSepp() {
         return hatSepp;
     }
 
+    /**
+     * Sets hat sepp.
+     *
+     * @param hatSepp the hat sepp
+     */
     public void setHatSepp(boolean hatSepp) {
         this.hatSepp = hatSepp;
     }
 
+    /**
+     * Sets punkte.
+     *
+     * @param punkte the punkte
+     */
     public void setPunkte(int punkte) {
         this.punkte = punkte;
     }
 
+    /**
+     * Is check false boolean.
+     *
+     * @param spiel the spiel
+     * @return the boolean
+     */
     public boolean isCheckFalse(Spiel spiel) {
         for (int i = 0; i < spiel.getAktuellerSpieler().getHandSize(); i++) {
             if (spiel.getObersteKarte().getFarbe() == spiel.getAktuellerSpieler().hand.get(i).getFarbe()) {

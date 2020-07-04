@@ -14,15 +14,21 @@ public class KartenStapel {
 
     private Vector<Karte> kartenstapel;
 
+    /**
+     * Instantiates a new Karten stapel.
+     */
     public KartenStapel() {
         kartenstapel = new Vector<Karte>();
     }
 
+    /**
+     * Generiere deck schweiz.
+     */
     public void generiereDeckSchweiz() {
 
         Karte.Farbe[] farben = Karte.Farbe.values();
 
-        for (int i = 0; i < farben.length-4; i++) {
+        for (int i = 0; i < farben.length - 4; i++) {
 
             Karte.Farbe farbe = farben[i];
 
@@ -60,6 +66,9 @@ public class KartenStapel {
 
     }
 
+    /**
+     * Generiere deck französisch.
+     */
     public void generiereDeckFranzösisch() {
 
         Karte.Farbe[] farben = Karte.Farbe.values();
@@ -90,32 +99,60 @@ public class KartenStapel {
         }
 
 
-
     }
 
-    public void kartenMischen(){
+    /**
+     * Karten mischen.
+     */
+    public void kartenMischen() {
         Collections.shuffle(kartenstapel);
     }
 
-    public void addKarte(Karte karte){
+    /**
+     * Add karte.
+     *
+     * @param karte the karte
+     */
+    public void addKarte(Karte karte) {
         kartenstapel.add(karte);
     }
 
-    public void removebyIndex(int index){
+    /**
+     * Removeby index.
+     *
+     * @param index the index
+     */
+    public void removebyIndex(int index) {
         kartenstapel.remove(index);
     }
 
-   public void removeKarte(Karte karte){
+    /**
+     * Remove karte.
+     *
+     * @param karte the karte
+     */
+    public void removeKarte(Karte karte) {
         kartenstapel.remove(karte);
-   }
+    }
 
-   public Karte getKarte(int index){
+    /**
+     * Get karte karte.
+     *
+     * @param index the index
+     * @return the karte
+     */
+    public Karte getKarte(int index) {
         return kartenstapel.get(index);
-   }
+    }
 
-   public int getSize(){
+    /**
+     * Get size int.
+     *
+     * @return the int
+     */
+    public int getSize() {
         return kartenstapel.size();
-   }
+    }
 
     @Override
     public String toString() {

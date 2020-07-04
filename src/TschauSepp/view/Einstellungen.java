@@ -1,12 +1,14 @@
 package TschauSepp.view;
 
+import TschauSepp.Controller.MenuController;
+import TschauSepp.model.SaveData;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Project Tschau_Sepp
@@ -17,48 +19,116 @@ import java.io.IOException;
  */
 public class Einstellungen extends JDialog {
 
+    /**
+     * The Buffered image.
+     */
     BufferedImage bufferedImage = null;
+    /**
+     * The Save data.
+     */
+    SaveData saveData;
 
+    /**
+     * The Background panel.
+     */
     BackgroundJPanel backgroundPanel;
 
+    /**
+     * The Regeln panel.
+     */
     JPanel regelnPanel;
 
+    /**
+     * The Nur eine runde.
+     */
     JLabel nurEineRunde;
+    /**
+     * The Getnur eine runde.
+     */
     JCheckBox getnurEineRunde;
 
+    /**
+     * The Maxpunktzahl.
+     */
     JLabel maxpunktzahl;
+    /**
+     * The Maxpunkte.
+     */
     JTextField maxpunkte;
 
+    /**
+     * The Hilfe.
+     */
     JLabel hilfe;
+    /**
+     * The Gethilfe.
+     */
     JCheckBox gethilfe;
 
+    /**
+     * The Sprache.
+     */
     JLabel sprache;
+    /**
+     * The Sprachen.
+     */
     JComboBox sprachen;
-    String[] allesprachen ={
-        "Deutsch",
-        "Français",
-        "English"
+    /**
+     * The Allesprachen.
+     */
+    String[] allesprachen = {
+            "Deutsch",
+            "Français",
+            "English"
 
     };
 
+    /**
+     * The Freiwillige aufnahme.
+     */
     JLabel freiwilligeAufnahme;
+    /**
+     * The Getfreiwillige aufnahme.
+     */
     JCheckBox getfreiwilligeAufnahme;
 
+    /**
+     * The Aussetzen nach aufnahme.
+     */
     JLabel aussetzenNachAufnahme;
+    /**
+     * The Getaussetzen nach aufnahme.
+     */
     JCheckBox getaussetzenNachAufnahme;
 
+    /**
+     * The Kein doppelbauer.
+     */
     JLabel keinDoppelbauer;
+    /**
+     * The Getkein doppelbauer.
+     */
     JCheckBox getkeinDoppelbauer;
 
+    /**
+     * The Speichern.
+     */
     JButton speichern;
 
-    public Einstellungen() {
+    /**
+     * Instantiates a new Einstellungen.
+     *
+     * @param saveData the save data
+     */
+    public Einstellungen(SaveData saveData) {
 
         setTitle("Einstellungen");
 
-        try{
+        this.saveData = saveData;
+
+        try {
             bufferedImage = ImageIO.read(new File("Hintergründe/Einstellungen_Hindergrund.png"));
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -74,11 +144,14 @@ public class Einstellungen extends JDialog {
         sprachen = new JComboBox(allesprachen);
         freiwilligeAufnahme = new JLabel("Freiwillige Aufnahme");
         getfreiwilligeAufnahme = new JCheckBox();
-        aussetzenNachAufnahme = new JLabel("Aussetzen nach Aufnahme");
+        aussetzenNachAufnahme = new JLabel("Aussetzen");
         getaussetzenNachAufnahme = new JCheckBox();
         keinDoppelbauer = new JLabel("Kein Doppelbauer");
         getkeinDoppelbauer = new JCheckBox();
         speichern = new JButton("Speichern");
+        speichern.addActionListener(e -> MenuController.saveEinstellungen(this, getnurEineRunde, maxpunkte, getfreiwilligeAufnahme, getaussetzenNachAufnahme, getkeinDoppelbauer, saveData));
+
+        saveData.readfile(getnurEineRunde, maxpunkte, getfreiwilligeAufnahme, getaussetzenNachAufnahme, getkeinDoppelbauer);
 
         backgroundPanel.setPreferredSize(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
         add(backgroundPanel);
@@ -88,7 +161,10 @@ public class Einstellungen extends JDialog {
         setResizable(false);
     }
 
-    public void init(){
+    /**
+     * Init.
+     */
+    public void init() {
 
         backgroundPanel.setLayout(new BorderLayout());
 
@@ -118,19 +194,6 @@ public class Einstellungen extends JDialog {
 
         regelnPanel.add(maxpunkte);
 
-        regelnPanel.add(hilfe);
-        hilfe.setForeground(Color.yellow);
-        hilfe.setFont(new Font("Serif", Font.BOLD, 20));
-
-        regelnPanel.add(gethilfe);
-        gethilfe.setOpaque(false);
-
-        regelnPanel.add(sprache);
-        sprache.setForeground(Color.yellow);
-        sprache.setFont(new Font("Serif", Font.BOLD, 20));
-
-        regelnPanel.add(sprachen);
-
         regelnPanel.add(freiwilligeAufnahme);
         freiwilligeAufnahme.setForeground(Color.yellow);
         freiwilligeAufnahme.setFont(new Font("Serif", Font.BOLD, 20));
@@ -141,6 +204,7 @@ public class Einstellungen extends JDialog {
         regelnPanel.add(aussetzenNachAufnahme);
         aussetzenNachAufnahme.setForeground(Color.yellow);
         aussetzenNachAufnahme.setFont(new Font("Serif", Font.BOLD, 20));
+        ;
 
         regelnPanel.add(getaussetzenNachAufnahme);
         getaussetzenNachAufnahme.setOpaque(false);
@@ -159,10 +223,12 @@ public class Einstellungen extends JDialog {
     }
 
 
-
-    class BackgroundJPanel extends JPanel{
+    /**
+     * The type Background j panel.
+     */
+    class BackgroundJPanel extends JPanel {
         @Override
-        public void paintComponent(Graphics g){
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(bufferedImage, 0, 0, this);
         }

@@ -13,26 +13,48 @@ public class AblegeStapel {
 
     private Vector<Karte> ablegestapel;
 
-    public AblegeStapel(){
+    /**
+     * Instantiates a new Ablege stapel.
+     */
+    public AblegeStapel() {
 
         ablegestapel = new Vector<Karte>();
 
     }
 
-    public void addKarte(Karte karte){
+    /**
+     * Add karte.
+     *
+     * @param karte the karte
+     */
+    public void addKarte(Karte karte) {
         ablegestapel.add(karte);
     }
 
-    public void removeallKarten(){
+    /**
+     * Removeall karten.
+     */
+    public void removeallKarten() {
         ablegestapel.clear();
     }
 
-    public Karte getKarte(int index){
+    /**
+     * Get karte karte.
+     *
+     * @param index the index
+     * @return the karte
+     */
+    public Karte getKarte(int index) {
         return ablegestapel.get(index);
     }
 
-    public int getSize(){
-       return ablegestapel.size();
+    /**
+     * Get size int.
+     *
+     * @return the int
+     */
+    public int getSize() {
+        return ablegestapel.size();
     }
 
     @Override

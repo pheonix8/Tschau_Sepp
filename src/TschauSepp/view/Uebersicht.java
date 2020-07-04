@@ -1,6 +1,5 @@
 package TschauSepp.view;
 
-import TschauSepp.Controller.SpielController;
 import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
 
@@ -16,9 +15,9 @@ import java.util.Vector;
  *
  * @author Leo Oetterli
  * @version 0.1
- * @since 01.07.2020
+ * @since 04.07.2020
  */
-public class RundenUbersicht extends JDialog {
+public class Uebersicht extends JDialog {
 
     /**
      * The Background.
@@ -69,12 +68,12 @@ public class RundenUbersicht extends JDialog {
     Spiel spiel;
 
     /**
-     * Instantiates a new Runden ubersicht.
+     * Instantiates a new Uebersicht.
      *
      * @param allespieler the allespieler
      * @param spiel       the spiel
      */
-    public RundenUbersicht(Vector<Spieler> allespieler, Spiel spiel) {
+    public Uebersicht(Vector<Spieler> allespieler, Spiel spiel) {
 
         setTitle("Rundenübersicht");
 
@@ -98,9 +97,9 @@ public class RundenUbersicht extends JDialog {
         player7.setEditable(false);
 
         weiter = new JButton("Weiter");
-        weiter.addActionListener(e -> SpielController.onClickWeiter(spiel, this));
+        weiter.addActionListener(e -> dispose());
 
-        background.setPreferredSize(new Dimension(500,800));
+        background.setPreferredSize(new Dimension(500, 800));
         add(background);
         init();
         pack();
@@ -109,12 +108,12 @@ public class RundenUbersicht extends JDialog {
 
     }
 
-    private void init(){
+    private void init() {
 
         Collections.sort(allespieler, new Comparator<Spieler>() {
             @Override
             public int compare(Spieler o1, Spieler o2) {
-                return o2.getPunkte()-o1.getPunkte();
+                return o2.getPunkte() - o1.getPunkte();
             }
         });
 
@@ -122,27 +121,27 @@ public class RundenUbersicht extends JDialog {
         gridLayout.setHgap(50);
         gridLayout.setVgap(50);
 
-        if (allespieler.size() == 2){
-            gridLayout = new GridLayout(3,1);
-        } else if (allespieler.size() == 3){
-            gridLayout = new GridLayout(4,1);
-        } else if (allespieler.size() == 4){
-            gridLayout = new GridLayout(5,1);
-        } else if (allespieler.size() == 5){
-            gridLayout = new GridLayout(6,1);
-        } else if (allespieler.size() == 6){
-            gridLayout = new GridLayout(7,1);
+        if (allespieler.size() == 2) {
+            gridLayout = new GridLayout(3, 1);
+        } else if (allespieler.size() == 3) {
+            gridLayout = new GridLayout(4, 1);
+        } else if (allespieler.size() == 4) {
+            gridLayout = new GridLayout(5, 1);
+        } else if (allespieler.size() == 5) {
+            gridLayout = new GridLayout(6, 1);
+        } else if (allespieler.size() == 6) {
+            gridLayout = new GridLayout(7, 1);
         } else {
-            gridLayout = new GridLayout(8,1);
+            gridLayout = new GridLayout(8, 1);
         }
 
-        Border border = BorderFactory.createEmptyBorder(50,10,50,10);
+        Border border = BorderFactory.createEmptyBorder(50, 10, 50, 10);
 
         background.setBackground(Color.DARK_GRAY);
         background.setLayout(gridLayout);
         background.setBorder(border);
 
-        if (allespieler.size() == 2){
+        if (allespieler.size() == 2) {
             background.add(player1);
             background.add(player2);
             background.add(weiter);
@@ -150,7 +149,7 @@ public class RundenUbersicht extends JDialog {
             player1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
             player2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
 
-        } else if (allespieler.size() == 3){
+        } else if (allespieler.size() == 3) {
             background.add(player1);
             background.add(player2);
             background.add(player3);
@@ -160,7 +159,7 @@ public class RundenUbersicht extends JDialog {
             player2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
             player3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
 
-        } else if (allespieler.size() == 4){
+        } else if (allespieler.size() == 4) {
             background.add(player1);
             background.add(player2);
             background.add(player3);
@@ -172,7 +171,7 @@ public class RundenUbersicht extends JDialog {
             player3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
             player4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
 
-        } else if (allespieler.size() == 5){
+        } else if (allespieler.size() == 5) {
             background.add(player1);
             background.add(player2);
             background.add(player3);
@@ -186,7 +185,7 @@ public class RundenUbersicht extends JDialog {
             player4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
             player5.setText(allespieler.get(4).getName() + " : " + Integer.toString(allespieler.get(4).getPunkte()));
 
-        } else if (allespieler.size() == 6){
+        } else if (allespieler.size() == 6) {
             background.add(player1);
             background.add(player2);
             background.add(player3);

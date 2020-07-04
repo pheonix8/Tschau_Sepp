@@ -10,24 +10,120 @@ package TschauSepp.model;
 public class Karte {
 
 
-    enum Farbe{
+    /**
+     * The enum Farbe.
+     */
+    enum Farbe {
 
-        Rosen, Schilten, Eichel, Schellen,
-        Ecke, Herz, Schaufel, Kreuz;
+        /**
+         * Rosen farbe.
+         */
+        Rosen,
+        /**
+         * Schilten farbe.
+         */
+        Schilten,
+        /**
+         * Eichel farbe.
+         */
+        Eichel,
+        /**
+         * Schellen farbe.
+         */
+        Schellen,
+        /**
+         * Ecke farbe.
+         */
+        Ecke,
+        /**
+         * Herz farbe.
+         */
+        Herz,
+        /**
+         * Schaufel farbe.
+         */
+        Schaufel,
+        /**
+         * Kreuz farbe.
+         */
+        Kreuz;
 
         private static final Farbe[] farben = Farbe.values();
+
+        /**
+         * Gets farbe.
+         *
+         * @param i the
+         * @return the farbe
+         */
         public static Farbe getFarbe(int i) {
             return Farbe.farben[i];
         }
 
     }
 
-    enum Wert{
+    /**
+     * The enum Wert.
+     */
+    enum Wert {
 
-        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, König, As,
-        Zehn, Bauer, Dame;
+        /**
+         * Sechs wert.
+         */
+        Sechs,
+        /**
+         * Sieben wert.
+         */
+        Sieben,
+        /**
+         * Acht wert.
+         */
+        Acht,
+        /**
+         * Neun wert.
+         */
+        Neun,
+        /**
+         * Banner wert.
+         */
+        Banner,
+        /**
+         * Under wert.
+         */
+        Under,
+        /**
+         * Ober wert.
+         */
+        Ober,
+        /**
+         * König wert.
+         */
+        König,
+        /**
+         * As wert.
+         */
+        As,
+        /**
+         * Zehn wert.
+         */
+        Zehn,
+        /**
+         * Bauer wert.
+         */
+        Bauer,
+        /**
+         * Dame wert.
+         */
+        Dame;
 
         private static final Wert[] wert = Wert.values();
+
+        /**
+         * Gets wert.
+         *
+         * @param i the
+         * @return the wert
+         */
         public static Wert getWert(int i) {
             return Wert.wert[i];
         }
@@ -38,20 +134,42 @@ public class Karte {
     private final Wert wert;
     private final int punkte;
 
+    /**
+     * Instantiates a new Karte.
+     *
+     * @param farbe  the farbe
+     * @param wert   the wert
+     * @param punkte the punkte
+     */
     public Karte(Farbe farbe, Wert wert, int punkte) {
         this.farbe = farbe;
         this.wert = wert;
         this.punkte = punkte;
     }
 
+    /**
+     * Gets farbe.
+     *
+     * @return the farbe
+     */
     public Farbe getFarbe() {
         return farbe;
     }
 
+    /**
+     * Gets wert.
+     *
+     * @return the wert
+     */
     public Wert getWert() {
         return wert;
     }
 
+    /**
+     * Gets punkte.
+     *
+     * @return the punkte
+     */
     public int getPunkte() {
         return punkte;
     }

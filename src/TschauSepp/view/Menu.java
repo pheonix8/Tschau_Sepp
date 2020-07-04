@@ -1,6 +1,7 @@
 package TschauSepp.view;
 
-import TschauSepp.Controller.*;
+import TschauSepp.Controller.MenuController;
+import TschauSepp.model.SaveData;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,28 +17,65 @@ import java.io.File;
  * @version 0.1
  * @since 27.06.2020
  */
-public class Menu extends JFrame{
+public class Menu extends JFrame {
 
+    /**
+     * The Buffered image.
+     */
     BufferedImage bufferedImage = null;
+    /**
+     * The Settingsicon.
+     */
     ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
+    /**
+     * The Save data.
+     */
+    SaveData saveData = new SaveData();
 
+    /**
+     * The Background panel.
+     */
     BackgroundJPanel backgroundPanel;
 
+    /**
+     * The Einstellungs panel.
+     */
     JPanel einstellungsPanel;
 
+    /**
+     * The Einstellungen.
+     */
     JButton einstellungen;
 
+    /**
+     * The Starteinstellungen.
+     */
     JPanel starteinstellungen;
 
+    /**
+     * The Combobox panel.
+     */
     JPanel comboboxPanel;
 
+    /**
+     * The Deckart.
+     */
     JComboBox deckart;
+    /**
+     * The Art.
+     */
     String[] art = {
             "Schweizer Deck",
             "Französisches Deck"
     };
 
+    /**
+     * The Anzspieler.
+     */
     JComboBox anzspieler;
+    /**
+     * The Anzahl.
+     */
     String[] anzahl = {
             "2 Spieler",
             "3 Spieler",
@@ -47,34 +85,67 @@ public class Menu extends JFrame{
             "7 Spieler"
     };
 
+    /**
+     * The Player panel.
+     */
     JPanel playerPanel;
 
+    /**
+     * The Player 1.
+     */
     JTextField player1;
+    /**
+     * The Player 2.
+     */
     JTextField player2;
+    /**
+     * The Player 3.
+     */
     JTextField player3;
+    /**
+     * The Player 4.
+     */
     JTextField player4;
+    /**
+     * The Player 5.
+     */
     JTextField player5;
+    /**
+     * The Player 6.
+     */
     JTextField player6;
+    /**
+     * The Player 7.
+     */
     JTextField player7;
 
+    /**
+     * The Start panel.
+     */
     JPanel startPanel;
 
+    /**
+     * The Start.
+     */
     JButton start;
 
-    public Menu(){
+    /**
+     * Instantiates a new Menu.
+     */
+    public Menu() {
 
         super("Tschau Sepp");
 
-        try{
+        try {
             bufferedImage = ImageIO.read(new File("Hintergründe/Tschau_Sepp_Menu.png"));
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         backgroundPanel = new BackgroundJPanel();
         einstellungsPanel = new JPanel();
         einstellungen = new JButton();
-        einstellungen.addActionListener(e -> MenuController.onClickEinstellungen());
+        einstellungen.addActionListener(e -> MenuController.onClickEinstellungen(saveData));
 
         starteinstellungen = new JPanel();
         comboboxPanel = new JPanel();
@@ -112,12 +183,15 @@ public class Menu extends JFrame{
         setResizable(false);
     }
 
-    public void upperPanel(){
+    /**
+     * Upper panel.
+     */
+    public void upperPanel() {
         einstellungen.setBorderPainted(false);
         einstellungen.setFocusPainted(false);
         einstellungen.setIcon(settingsicon);
 
-        Border upperBorer = BorderFactory.createEmptyBorder(15,30,15,1800);
+        Border upperBorer = BorderFactory.createEmptyBorder(15, 30, 15, 1800);
 
         einstellungsPanel.setBorder(upperBorer);
         einstellungsPanel.add(einstellungen);
@@ -126,7 +200,10 @@ public class Menu extends JFrame{
         backgroundPanel.add(einstellungsPanel, BorderLayout.NORTH);
     }
 
-    public void starteinstellungsPanel(){
+    /**
+     * Starteinstellungs panel.
+     */
+    public void starteinstellungsPanel() {
         starteinstellungen.setLayout(new BorderLayout());
         starteinstellungen.setOpaque(false);
 
@@ -163,12 +240,15 @@ public class Menu extends JFrame{
         playerPanel.add(player6);
         playerPanel.add(player7);
 
-        starteinstellungen.add(comboboxPanel,BorderLayout.NORTH);
+        starteinstellungen.add(comboboxPanel, BorderLayout.NORTH);
         starteinstellungen.add(playerPanel, BorderLayout.CENTER);
         backgroundPanel.add(starteinstellungen, BorderLayout.CENTER);
     }
 
-    public void lowerPanel(){
+    /**
+     * Lower panel.
+     */
+    public void lowerPanel() {
 
         Border lowerborder = BorderFactory.createEmptyBorder(0, 750, 100, 750);
 
@@ -181,9 +261,12 @@ public class Menu extends JFrame{
         backgroundPanel.add(startPanel, BorderLayout.SOUTH);
     }
 
-    class BackgroundJPanel extends JPanel{
+    /**
+     * The type Background j panel.
+     */
+    class BackgroundJPanel extends JPanel {
         @Override
-        public void paintComponent(Graphics g){
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(bufferedImage, 0, 0, this);
         }

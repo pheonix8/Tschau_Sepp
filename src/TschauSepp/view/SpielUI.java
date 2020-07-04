@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -19,58 +21,171 @@ import java.util.*;
  * @author Leo Oetterli
  * @version 0.1
  * @since 29.06.2020
- *
  */
-public class SpielUI extends JFrame implements Observer{
+public class SpielUI extends JFrame implements Observer {
 
     private Spiel spiel;
     private Spieler spieler;
 
     private Vector<Spieler> allespieler;
 
+    /**
+     * The Buffered image.
+     */
     BufferedImage bufferedImage = null;
 
+    /**
+     * The Background j panel.
+     */
     BackgroundJPanel backgroundJPanel;
 
+    /**
+     * The Upper panel.
+     */
     JPanel upperPanel;
 
+    /**
+     * The Name.
+     */
     JLabel name;
+    /**
+     * The Punkteliste.
+     */
     JPanel punkteliste;
-    JTextField punkte1, punkte2, punkte3, punkte4, punkte5, punkte6, punkte7;
+    /**
+     * The Punkte 1.
+     */
+    JTextField punkte1, /**
+     * The Punkte 2.
+     */
+    punkte2, /**
+     * The Punkte 3.
+     */
+    punkte3, /**
+     * The Punkte 4.
+     */
+    punkte4, /**
+     * The Punkte 5.
+     */
+    punkte5, /**
+     * The Punkte 6.
+     */
+    punkte6, /**
+     * The Punkte 7.
+     */
+    punkte7;
 
+    /**
+     * The Center panel.
+     */
     JPanel centerPanel;
 
+    /**
+     * The Center stapel panel.
+     */
     JPanel centerStapelPanel;
+    /**
+     * The Kartenstapel.
+     */
     JLabel kartenstapel;
+    /**
+     * The Ablegestapel.
+     */
     JLabel ablegestapel;
 
+    /**
+     * The Center top panel.
+     */
     JPanel centerTopPanel;
+    /**
+     * The Oberer spieler 1.
+     */
     JLabel obererSpieler1;
+    /**
+     * The Oberer spieler 2.
+     */
     JLabel obererSpieler2;
 
+    /**
+     * The Center left panel.
+     */
     JPanel centerLeftPanel;
+    /**
+     * The Linker spieler 1.
+     */
     JLabel linkerSpieler1;
+    /**
+     * The Linker spieler 2.
+     */
     JLabel linkerSpieler2;
 
+    /**
+     * The Center right panel.
+     */
     JPanel centerRightPanel;
+    /**
+     * The Rechter spieler 1.
+     */
     JLabel rechterSpieler1;
+    /**
+     * The Rechter spieler 2.
+     */
     JLabel rechterSpieler2;
 
+    /**
+     * The Lower panel.
+     */
     JPanel lowerPanel;
 
+    /**
+     * The Karten panel.
+     */
     JPanel kartenPanel;
+    /**
+     * The Karten liste.
+     */
     JList kartenListe;
+    /**
+     * The Scroll pane.
+     */
     JScrollPane scrollPane;
+    /**
+     * The Default list model.
+     */
     DefaultListModel<ImageIcon> defaultListModel;
 
+    /**
+     * The Leftbutton panel.
+     */
     JPanel leftbuttonPanel;
+    /**
+     * The Setzen.
+     */
     JButton setzen;
+    /**
+     * The Ziehen.
+     */
     JButton ziehen;
 
+    /**
+     * The Rightbutton panel.
+     */
     JPanel rightbuttonPanel;
+    /**
+     * The Tschau.
+     */
     JButton tschau;
+    /**
+     * The Sepp.
+     */
     JButton sepp;
 
+    /**
+     * Instantiates a new Spiel ui.
+     *
+     * @param spiel       the spiel
+     * @param allespieler the allespieler
+     */
     public SpielUI(Spiel spiel, Vector<Spieler> allespieler) {
 
         super("Tschau Sepp");
@@ -88,8 +203,15 @@ public class SpielUI extends JFrame implements Observer{
         backgroundJPanel = new BackgroundJPanel();
 
         upperPanel = new JPanel();
+        upperPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Uebersicht uebersicht = new Uebersicht(allespieler, spiel);
+            }
+        });
+
         name = new JLabel();
-        
+
         punkteliste = new JPanel();
         punkte1 = new JTextField();
         punkte2 = new JTextField();
@@ -105,36 +227,36 @@ public class SpielUI extends JFrame implements Observer{
         punkte5.setEditable(false);
         punkte6.setEditable(false);
         punkte7.setEditable(false);
-        
+
         centerPanel = new JPanel();
-        
+
         centerStapelPanel = new JPanel();
 
         kartenstapel = new JLabel();
         ablegestapel = new JLabel();
-        
+
         centerTopPanel = new JPanel();
-        
+
         obererSpieler1 = new JLabel();
         obererSpieler2 = new JLabel();
-        
+
         centerLeftPanel = new JPanel();
-        
+
         linkerSpieler1 = new JLabel();
         linkerSpieler2 = new JLabel();
-        
+
         centerRightPanel = new JPanel();
-        
+
         rechterSpieler1 = new JLabel();
         rechterSpieler2 = new JLabel();
-        
+
         lowerPanel = new JPanel();
 
         kartenPanel = new JPanel();
         defaultListModel = new DefaultListModel<>();
         kartenListe = new JList<>(defaultListModel);
         scrollPane = new JScrollPane(kartenListe);
-        
+
         rightbuttonPanel = new JPanel();
         tschau = new JButton("Tschau");
         tschau.addActionListener(e -> SpielController.onClickTschau(spieler, spiel, tschau));
@@ -145,14 +267,14 @@ public class SpielUI extends JFrame implements Observer{
         setzen = new JButton("Setzen");
         setzen.addActionListener(e -> SpielController.onClickSetzen(spieler, kartenListe, spiel));
         ziehen = new JButton("Ziehen");
-        ziehen.addActionListener(e -> SpielController.onClickZiehen(spiel, tschau, sepp));
+        ziehen.addActionListener(e -> SpielController.onClickZiehen(spiel, spieler, tschau, sepp));
         spiel.getAktuellerSpieler().addObserver(this);
         spiel.addObserver(this);
 
         backgroundJPanel.setPreferredSize(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
 
         add(backgroundJPanel);
-        backgroundJPanel.setLayout(new BorderLayout(20,20));
+        backgroundJPanel.setLayout(new BorderLayout(20, 20));
         drawUpperpanel();
         drawCenterpanel();
         drawLowerpanel();
@@ -162,16 +284,19 @@ public class SpielUI extends JFrame implements Observer{
 
     }
 
-    public void drawUpperpanel(){
+    /**
+     * Draw upperpanel.
+     */
+    public void drawUpperpanel() {
 
         Collections.sort(allespieler, new Comparator<Spieler>() {
             @Override
             public int compare(Spieler o1, Spieler o2) {
-                return o2.getPunkte()-o1.getPunkte();
+                return o2.getPunkte() - o1.getPunkte();
             }
         });
 
-        Border upperborder = BorderFactory.createEmptyBorder(15,30,0,30);
+        Border upperborder = BorderFactory.createEmptyBorder(15, 30, 0, 30);
 
         upperPanel.setBorder(upperborder);
         upperPanel.setLayout(new BorderLayout(20,20));
@@ -292,17 +417,20 @@ public class SpielUI extends JFrame implements Observer{
 
     }
 
-    public void drawCenterpanel(){
+    /**
+     * Draw centerpanel.
+     */
+    public void drawCenterpanel() {
 
-        Border centerborder = BorderFactory.createEmptyBorder(0,544,0,544);
+        Border centerborder = BorderFactory.createEmptyBorder(0, 544, 0, 544);
 
         centerPanel.setBorder(centerborder);
-        centerPanel.setLayout(new BorderLayout(10,10));
+        centerPanel.setLayout(new BorderLayout(10, 10));
         centerPanel.setOpaque(false);
 
-        Border topborder = BorderFactory.createEmptyBorder(0,1,0,1);
+        Border topborder = BorderFactory.createEmptyBorder(0, 1, 0, 1);
 
-        GridLayout grid12layout = new GridLayout(1,2);
+        GridLayout grid12layout = new GridLayout(1, 2);
 
         centerTopPanel.setBorder(topborder);
         centerTopPanel.setLayout(grid12layout);
@@ -435,23 +563,26 @@ public class SpielUI extends JFrame implements Observer{
         centerPanel.add(centerTopPanel, BorderLayout.NORTH);
         centerPanel.add(centerStapelPanel, BorderLayout.CENTER);
         centerPanel.add(centerLeftPanel, BorderLayout.WEST);
-        centerPanel.add(centerRightPanel,BorderLayout.EAST);
+        centerPanel.add(centerRightPanel, BorderLayout.EAST);
 
         backgroundJPanel.add(centerPanel, BorderLayout.CENTER);
 
     }
 
-    public void drawLowerpanel(){
+    /**
+     * Draw lowerpanel.
+     */
+    public void drawLowerpanel() {
 
-        Border lowerborder = BorderFactory.createEmptyBorder(0,450,10,450);
+        Border lowerborder = BorderFactory.createEmptyBorder(0, 450, 10, 450);
 
         lowerPanel.setBorder(lowerborder);
-        lowerPanel.setLayout(new BorderLayout(10,10));
+        lowerPanel.setLayout(new BorderLayout(10, 10));
         lowerPanel.setOpaque(false);
 
-        Border kartenborder = BorderFactory.createEmptyBorder(0,20,0,20);
+        Border kartenborder = BorderFactory.createEmptyBorder(0, 20, 0, 20);
 
-        kartenPanel.setPreferredSize(new Dimension(850,200));
+        kartenPanel.setPreferredSize(new Dimension(850, 200));
         kartenPanel.setBorder(kartenborder);
         kartenPanel.setOpaque(false);
         kartenPanel.add(scrollPane);
@@ -520,8 +651,17 @@ public class SpielUI extends JFrame implements Observer{
         drawCenterpanel();
         drawLowerpanel();
 
+        if (spieler.isHatTschau()) {
+            tschau.setForeground(Color.green);
+        } else {
+            tschau.setForeground(Color.black);
+        }
+
     }
 
+    /**
+     * The type Background j panel.
+     */
     class BackgroundJPanel extends JPanel {
         @Override
         public void paintComponent(Graphics g) {

@@ -5,8 +5,12 @@ import TschauSepp.view.RundenUbersicht;
 import TschauSepp.view.SpielUI;
 import TschauSepp.view.Spielende;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Vector;
+import java.util.stream.Stream;
 
 /**
  * Project Tschau_Sepp
@@ -17,7 +21,12 @@ import java.util.Vector;
  */
 public class Spiel extends Observable {
 
+    private boolean nurEineRunde;
     private int maxPunktzahl;
+    private boolean freiwilligeAufnahme;
+    private boolean aussetzen;
+    private boolean keinDoppelbauer;
+
     private boolean spieltImUhrzeigersinn;
     private Spieler aktuellerSpieler;
     private Vector<Spieler> alleSpieler;
@@ -25,10 +34,17 @@ public class Spiel extends Observable {
     private AblegeStapel ablegeStapel;
     private Karte obersteKarte;
 
-
     private SpielUI spielUI;
     private Menu menu;
 
+    /**
+     * Instantiates a new Spiel.
+     *
+     * @param alleSpieler  the alle spieler
+     * @param kartenStapel the karten stapel
+     * @param ablegeStapel the ablege stapel
+     * @param menu         the menu
+     */
     public Spiel(Vector<Spieler> alleSpieler, KartenStapel kartenStapel, AblegeStapel ablegeStapel, Menu menu) {
 
         this.alleSpieler = alleSpieler;
@@ -41,9 +57,16 @@ public class Spiel extends Observable {
     }
 
 
+    /**
+     * Spiel start.
+     */
     public void spielStart() {
 
-        maxPunktzahl = 20;
+        readfile();
+
+        if (nurEineRunde) {
+            maxPunktzahl = 0;
+        }
 
         for (int i = 0; i < alleSpieler.size(); i++) {
             alleSpieler.get(i).setPunkte(0);
@@ -53,32 +76,42 @@ public class Spiel extends Observable {
 
     }
 
+    /**
+     * Nächster spieler.
+     */
     public void nächsterSpieler() {
 
-        if (!spieltImUhrzeigersinn) {
-            if (alleSpieler.indexOf(aktuellerSpieler) + 1 == alleSpieler.size()) {
-                setAktuellerSpieler(alleSpieler.get(0));
-            } else {
-                setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) + 1));
+        if (getObersteKarte().getPunkte() != 11) {
+            int auslassen = 1;
+
+            if (getObersteKarte().getPunkte() == 8) {
+                auslassen = 2;
             }
-        } else {
-            for (int i = 0; i < alleSpieler.size(); i++) {
-                if (alleSpieler.get(i).equals(aktuellerSpieler)) {
-                    if (i == 0) {
-                        setAktuellerSpieler(alleSpieler.get(alleSpieler.size()));
+
+            for (int i = 0; i < auslassen; i++) {
+                if (!spieltImUhrzeigersinn) {
+                    if (alleSpieler.indexOf(aktuellerSpieler) + 1 == alleSpieler.size()) {
+                        setAktuellerSpieler(alleSpieler.get(0));
+                    } else {
+                        setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) + 1));
                     }
                 } else {
-                    setAktuellerSpieler(alleSpieler.get(i - 1));
+                    if (alleSpieler.indexOf(aktuellerSpieler) - 1 == -1) {
+                        setAktuellerSpieler(alleSpieler.get(alleSpieler.size() - 1));
+                    } else {
+                        setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) - 1));
+                    }
                 }
-                break;
             }
         }
 
         setChanged();
         notifyObservers(aktuellerSpieler);
-
     }
 
+    /**
+     * Runde starten.
+     */
     public void rundeStarten() {
 
         for (int i = 0; i < ablegeStapel.getSize(); i++) {
@@ -124,6 +157,11 @@ public class Spiel extends Observable {
 
     }
 
+    /**
+     * Sepp sagen.
+     *
+     * @param spieler the spieler
+     */
     public void seppSagen(Spieler spieler) {
 
         if (spieler.getHandSize() == 2) {
@@ -131,6 +169,11 @@ public class Spiel extends Observable {
         }
     }
 
+    /**
+     * Runde beenden.
+     *
+     * @param spieler the spieler
+     */
     public void rundeBeenden(Spieler spieler) {
 
         for (int i = 0; i < alleSpieler.size(); i++) {
@@ -147,42 +190,154 @@ public class Spiel extends Observable {
 
         spielUI.dispose();
 
-        if (spieler.getPunkte() >= maxPunktzahl){
+        if (spieler.getPunkte() >= maxPunktzahl) {
             spielBeenden(spieler);
         } else {
             RundenUbersicht rundenUbersicht = new RundenUbersicht(alleSpieler, this);
         }
     }
 
-    public void spielBeenden(Spieler spieler){
+    /**
+     * Spiel beenden.
+     *
+     * @param spieler the spieler
+     */
+    public void spielBeenden(Spieler spieler) {
 
         Spielende spielende = new Spielende(this, spieler, menu);
 
     }
 
+    /**
+     * Readfile.
+     */
+    public void readfile() {
+
+        try {
+            Stream<String> lines = Files.lines(Paths.get("SaveData/savesettings.txt"));
+
+            String[] settings = lines.toArray(String[]::new);
+
+            if (settings[0].equalsIgnoreCase("true")) {
+                nurEineRunde = true;
+            } else {
+                nurEineRunde = false;
+            }
+
+            String punkte = settings[1];
+            maxPunktzahl = Integer.parseInt(punkte);
+
+            if (settings[2].equalsIgnoreCase("true")) {
+                freiwilligeAufnahme = true;
+            } else {
+                freiwilligeAufnahme = false;
+            }
+
+            if (settings[3].equalsIgnoreCase("true")) {
+                aussetzen = true;
+            } else {
+                aussetzen = false;
+            }
+
+            if (settings[4].equalsIgnoreCase("true")) {
+                keinDoppelbauer = true;
+            } else {
+                keinDoppelbauer = false;
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Unable to open file." + ex.toString());
+        }
+
+    }
+
+    /**
+     * Gets karten stapel.
+     *
+     * @return the karten stapel
+     */
     public KartenStapel getKartenStapel() {
         return kartenStapel;
     }
 
+    /**
+     * Gets ablege stapel.
+     *
+     * @return the ablege stapel
+     */
     public AblegeStapel getAblegeStapel() {
         return ablegeStapel;
     }
 
+    /**
+     * Gets oberste karte.
+     *
+     * @return the oberste karte
+     */
     public Karte getObersteKarte() {
         return obersteKarte;
     }
 
+    /**
+     * Sets oberste karte.
+     *
+     * @param obersteKarte the oberste karte
+     */
     public void setObersteKarte(Karte obersteKarte) {
         this.obersteKarte = obersteKarte;
     }
 
+    /**
+     * Gets aktueller spieler.
+     *
+     * @return the aktueller spieler
+     */
     public Spieler getAktuellerSpieler() {
         return aktuellerSpieler;
     }
 
+    /**
+     * Sets aktueller spieler.
+     *
+     * @param aktuellerSpieler the aktueller spieler
+     */
     public void setAktuellerSpieler(Spieler aktuellerSpieler) {
         this.aktuellerSpieler = aktuellerSpieler;
     }
 
+    /**
+     * Sets spielt im uhrzeigersinn.
+     *
+     * @param spieltImUhrzeigersinn the spielt im uhrzeigersinn
+     */
+    public void setSpieltImUhrzeigersinn(boolean spieltImUhrzeigersinn) {
+        this.spieltImUhrzeigersinn = spieltImUhrzeigersinn;
+    }
 
+    /**
+     * Is spielt im uhrzeigersinn boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isSpieltImUhrzeigersinn() {
+        return spieltImUhrzeigersinn;
+    }
+
+    /**
+     * Is aussetzen boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isAussetzen() {
+        return aussetzen;
+    }
+
+    /**
+     * Is freiwillige aufnahme boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isFreiwilligeAufnahme() {
+        return freiwilligeAufnahme;
+    }
 }
