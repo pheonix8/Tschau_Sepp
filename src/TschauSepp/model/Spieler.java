@@ -14,8 +14,8 @@ import java.util.Vector;
  */
 public class Spieler extends Observable {
 
-    private String name;
-    private Vector<Karte> hand;
+    private final String name;
+    private final Vector<Karte> hand;
     private int punkte;
 
     private boolean hatTschau;
@@ -29,7 +29,7 @@ public class Spieler extends Observable {
      */
     public Spieler(String name) {
         this.name = name;
-        hand = new Vector<Karte>();
+        hand = new Vector<>();
         punkte = 0;
 
         hatTschau = false;
@@ -91,11 +91,7 @@ public class Spieler extends Observable {
                 spiel.setObersteKarte(karte);
 
                 if (karte.getPunkte() == 10) {
-                    if (spiel.isSpieltImUhrzeigersinn()) {
-                        spiel.setSpieltImUhrzeigersinn(false);
-                    } else {
-                        spiel.setSpieltImUhrzeigersinn(true);
-                    }
+                    spiel.setSpieltImUhrzeigersinn(!spiel.isSpieltImUhrzeigersinn());
                 }
 
                 if (hand.size() == 0) {
@@ -137,20 +133,20 @@ public class Spieler extends Observable {
             spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
             spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
 
-            setChanged();
-            notifyObservers(spieler);
-
             if (spiel.isAussetzen()) {
                 spiel.nächsterSpieler();
             } else {
                 check = true;
                 isCheckFalse(spiel);
-
-                if (check) {
-                    spiel.nächsterSpieler();
-                }
+            }
+            if (check) {
+                spiel.nächsterSpieler();
+            } else {
+                spiel.setAgain(false);
+                spiel.nächsterSpieler();
             }
         }
+
     }
 
     /**
@@ -176,6 +172,7 @@ public class Spieler extends Observable {
         }
 
         spiel.nächsterSpieler();
+
     }
 
     /**
@@ -194,15 +191,6 @@ public class Spieler extends Observable {
      */
     public void addKarte(Karte karte) {
         hand.add(karte);
-    }
-
-    /**
-     * Remove karte.
-     *
-     * @param karte the karte
-     */
-    public void removeKarte(Karte karte) {
-        hand.remove(karte);
     }
 
     /**

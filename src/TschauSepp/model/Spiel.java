@@ -29,6 +29,7 @@ public class Spiel extends Observable {
 
     private boolean aus;
     private int auslassen;
+    private boolean again;
 
     private boolean spieltImUhrzeigersinn;
     private Spieler aktuellerSpieler;
@@ -58,6 +59,7 @@ public class Spiel extends Observable {
         spieltImUhrzeigersinn = false;
         aktuellerSpieler = alleSpieler.get(0);
         aus = true;
+        again = true;
     }
 
 
@@ -76,6 +78,11 @@ public class Spiel extends Observable {
             alleSpieler.get(i).setPunkte(0);
         }
 
+        for (int i = 0; i < alleSpieler.size(); i++) {
+            alleSpieler.get(i).setHatTschau(false);
+            alleSpieler.get(i).setHatSepp(false);
+        }
+
         rundeStarten();
 
     }
@@ -85,30 +92,33 @@ public class Spiel extends Observable {
      */
     public void nächsterSpieler() {
 
-        if (getObersteKarte().getPunkte() != 11) {
-            auslassen = 1;
+        if (again) {
 
-            if (getObersteKarte().getPunkte() == 8) {
-                if (aus) {
-                    auslassen = 2;
-                    aus = false;
+            if (getObersteKarte().getPunkte() != 11) {
+                auslassen = 1;
+
+                if (getObersteKarte().getPunkte() == 8) {
+                    if (aus) {
+                        auslassen = 2;
+                        aus = false;
+                    }
+
+
                 }
 
-
-            }
-
-            for (int i = 0; i < auslassen; i++) {
-                if (!spieltImUhrzeigersinn) {
-                    if (alleSpieler.indexOf(aktuellerSpieler) + 1 == alleSpieler.size()) {
-                        setAktuellerSpieler(alleSpieler.get(0));
+                for (int i = 0; i < auslassen; i++) {
+                    if (!spieltImUhrzeigersinn) {
+                        if (alleSpieler.indexOf(aktuellerSpieler) + 1 == alleSpieler.size()) {
+                            setAktuellerSpieler(alleSpieler.get(0));
+                        } else {
+                            setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) + 1));
+                        }
                     } else {
-                        setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) + 1));
-                    }
-                } else {
-                    if (alleSpieler.indexOf(aktuellerSpieler) - 1 == -1) {
-                        setAktuellerSpieler(alleSpieler.get(alleSpieler.size() - 1));
-                    } else {
-                        setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) - 1));
+                        if (alleSpieler.indexOf(aktuellerSpieler) - 1 == -1) {
+                            setAktuellerSpieler(alleSpieler.get(alleSpieler.size() - 1));
+                        } else {
+                            setAktuellerSpieler(alleSpieler.get(alleSpieler.indexOf(aktuellerSpieler) - 1));
+                        }
                     }
                 }
             }
@@ -116,9 +126,10 @@ public class Spiel extends Observable {
 
         setChanged();
         notifyObservers(aktuellerSpieler);
-        if (auslassen == 1) {
+        if (auslassen == 1 || auslassen == 2) {
             aus = true;
         }
+        again = true;
     }
 
     /**
@@ -167,18 +178,6 @@ public class Spiel extends Observable {
 
         spielUI = new SpielUI(this, alleSpieler);
 
-    }
-
-    /**
-     * Sepp sagen.
-     *
-     * @param spieler the spieler
-     */
-    public void seppSagen(Spieler spieler) {
-
-        if (spieler.getHandSize() == 2) {
-            spieler.setHatTschau(true);
-        }
     }
 
     /**
@@ -351,5 +350,23 @@ public class Spiel extends Observable {
      */
     public boolean isFreiwilligeAufnahme() {
         return freiwilligeAufnahme;
+    }
+
+    /**
+     * Is again boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isAgain() {
+        return again;
+    }
+
+    /**
+     * Sets again.
+     *
+     * @param again the again
+     */
+    public void setAgain(boolean again) {
+        this.again = again;
     }
 }
