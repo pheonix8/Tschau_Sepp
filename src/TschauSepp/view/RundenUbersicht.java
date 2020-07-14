@@ -17,12 +17,6 @@ import java.util.Vector;
  */
 public class RundenUbersicht extends JDialog {
 
-    private Vector<Spieler> allespieler;
-    private Spiel spiel;
-
-    private Punkteliste punkteliste;
-    private JButton weiter;
-
     /**
      * Instantiates a new Runden ubersicht.
      *
@@ -33,10 +27,8 @@ public class RundenUbersicht extends JDialog {
 
         setTitle("Rundenübersicht");
 
-        this.allespieler = allespieler;
-        this.spiel = spiel;
-        punkteliste = new Punkteliste(allespieler, spiel);
-        weiter = new JButton("weiter");
+        Punkteliste punkteliste = new Punkteliste(allespieler);
+        JButton weiter = new JButton("weiter");
         weiter.addActionListener(e -> SpielController.onClickWeiter(spiel, this));
         add(punkteliste);
 

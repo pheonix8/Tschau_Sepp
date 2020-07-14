@@ -1,12 +1,10 @@
 package TschauSepp.view;
 
-import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -18,24 +16,21 @@ import java.util.Vector;
  */
 public class Punkteliste extends JPanel {
 
-    private Vector<Spieler> allespieler;
-    private Spiel spiel;
+    private final Vector<Spieler> allespieler;
 
-    private JPanel background;
+    private final JPanel background;
 
-    private JTextField player1;
-    private JTextField player2;
-    private JTextField player3;
-    private JTextField player4;
-    private JTextField player5;
-    private JTextField player6;
-    private JTextField player7;
-    private JButton weiter;
+    private final JTextField player1;
+    private final JTextField player2;
+    private final JTextField player3;
+    private final JTextField player4;
+    private final JTextField player5;
+    private final JTextField player6;
+    private final JTextField player7;
 
-    public Punkteliste(Vector<Spieler> allespieler, Spiel spiel) {
+    public Punkteliste(Vector<Spieler> allespieler) {
 
         this.allespieler = allespieler;
-        this.spiel = spiel;
 
         background = new JPanel();
         player1 = new JTextField();
@@ -53,7 +48,7 @@ public class Punkteliste extends JPanel {
         player7 = new JTextField();
         player7.setEditable(false);
 
-        weiter = new JButton("Weiter");
+        new JButton("Weiter");
 
         add(background);
         init();
@@ -62,7 +57,7 @@ public class Punkteliste extends JPanel {
 
     private void init() {
 
-        Collections.sort(allespieler, (o1, o2) -> o2.getPunkte() - o1.getPunkte());
+        allespieler.sort((o1, o2) -> o2.getPunkte() - o1.getPunkte());
 
         GridLayout gridLayout = new GridLayout();
         gridLayout.setHgap(10);

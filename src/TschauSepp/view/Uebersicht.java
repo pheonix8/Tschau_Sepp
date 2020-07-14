@@ -1,6 +1,5 @@
 package TschauSepp.view;
 
-import TschauSepp.model.Spiel;
 import TschauSepp.model.Spieler;
 
 import javax.swing.*;
@@ -18,26 +17,17 @@ import java.util.Vector;
  */
 public class Uebersicht extends JDialog {
 
-    private Vector<Spieler> allespieler;
-    private Spiel spiel;
-
-    private Punkteliste punkteliste;
-    private JButton weiter;
-
     /**
      * Instantiates a new Uebersicht.
      *
      * @param allespieler the allespieler
-     * @param spiel       the spiel
      */
-    public Uebersicht(Vector<Spieler> allespieler, Spiel spiel) {
+    public Uebersicht(Vector<Spieler> allespieler) {
 
         setTitle("Übersicht");
 
-        this.allespieler = allespieler;
-        this.spiel = spiel;
-        punkteliste = new Punkteliste(allespieler, spiel);
-        weiter = new JButton("Weiter");
+        Punkteliste punkteliste = new Punkteliste(allespieler);
+        JButton weiter = new JButton("Weiter");
         weiter.addActionListener(e -> dispose());
 
         addWindowFocusListener(new WindowFocusListener() {

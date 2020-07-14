@@ -26,51 +26,51 @@ import java.util.Vector;
  */
 public class SpielUI extends JFrame implements Observer {
 
-    private Spiel spiel;
+    private final Spiel spiel;
     private Spieler spieler;
-    private Vector<Spieler> allespieler;
+    private final Vector<Spieler> allespieler;
     private BufferedImage bufferedImage = null;
 
-    private BackgroundJPanel backgroundJPanel;
+    private final BackgroundJPanel backgroundJPanel;
 
-    private JPanel upperPanel;
+    private final JPanel upperPanel;
 
-    private JLabel name;
-    private Punkteliste punkteliste;
+    private final JLabel name;
+    private final Punkteliste punkteliste;
 
-    private JPanel centerPanel;
+    private final JPanel centerPanel;
 
-    private JPanel centerStapelPanel;
-    private JPanel centerTopPanel;
-    private JPanel centerLeftPanel;
-    private JPanel centerRightPanel;
+    private final JPanel centerStapelPanel;
+    private final JPanel centerTopPanel;
+    private final JPanel centerLeftPanel;
+    private final JPanel centerRightPanel;
 
-    private JLabel kartenstapel;
-    private JLabel ablegestapel;
+    private final JLabel kartenstapel;
+    private final JLabel ablegestapel;
 
-    private JLabel obererSpieler1;
-    private JLabel obererSpieler2;
+    private final JLabel obererSpieler1;
+    private final JLabel obererSpieler2;
 
-    private JLabel linkerSpieler1;
-    private JLabel linkerSpieler2;
+    private final JLabel linkerSpieler1;
+    private final JLabel linkerSpieler2;
 
-    private JLabel rechterSpieler1;
-    private JLabel rechterSpieler2;
+    private final JLabel rechterSpieler1;
+    private final JLabel rechterSpieler2;
 
-    private JPanel lowerPanel;
-    private JPanel kartenPanel;
-    private JPanel leftbuttonPanel;
-    private JPanel rightbuttonPanel;
+    private final JPanel lowerPanel;
+    private final JPanel kartenPanel;
+    private final JPanel leftbuttonPanel;
+    private final JPanel rightbuttonPanel;
 
-    private JList kartenListe;
-    private JScrollPane scrollPane;
-    private DefaultListModel<ImageIcon> defaultListModel;
+    private final JList kartenListe;
+    private final JScrollPane scrollPane;
+    private final DefaultListModel<ImageIcon> defaultListModel;
 
-    private JButton setzen;
-    private JButton ziehen;
+    private final JButton setzen;
+    private final JButton ziehen;
 
-    private JButton tschau;
-    private JButton sepp;
+    private final JButton tschau;
+    private final JButton sepp;
 
     /**
      * Instantiates a new Spiel ui.
@@ -98,11 +98,11 @@ public class SpielUI extends JFrame implements Observer {
 
         name = new JLabel();
 
-        punkteliste = new Punkteliste(allespieler, spiel);
+        punkteliste = new Punkteliste(allespieler);
         punkteliste.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Uebersicht uebersicht = new Uebersicht(allespieler, spiel);
+                new Uebersicht(allespieler);
             }
         });
 
@@ -249,7 +249,7 @@ public class SpielUI extends JFrame implements Observer {
         centerStapelPanel.add(ablegestapel);
         centerStapelPanel.add(kartenstapel);
 
-        URL path = getClass().getResource("../img/"+spiel.getObersteKarte().getFarbe()+"-"+spiel.getObersteKarte().getWert()+".gif");
+        URL path = getClass().getResource("../img/karten/" + spiel.getObersteKarte().getFarbe() + "-" + spiel.getObersteKarte().getWert() + ".gif");
         ImageIcon ablegeIcon = new ImageIcon(path);
         Image image = ablegeIcon.getImage();
         Image newimg = image.getScaledInstance(161, 247, java.awt.Image.SCALE_SMOOTH);
@@ -401,7 +401,7 @@ public class SpielUI extends JFrame implements Observer {
 
         for (int i = 0; i < spieler.getHandSize(); i++) {
 
-            URL path2 = getClass().getResource("../img/"+spieler.getKarte(i).getFarbe()+"-"+spieler.getKarte(i).getWert()+".gif");
+            URL path2 = getClass().getResource("../img/karten/" + spieler.getKarte(i).getFarbe() + "-" + spieler.getKarte(i).getWert() + ".gif");
             ImageIcon imageIcon2 = new ImageIcon(path2);
             Image image2 = imageIcon2.getImage();
             Image newimg2 = image2.getScaledInstance(115, 170, java.awt.Image.SCALE_SMOOTH);

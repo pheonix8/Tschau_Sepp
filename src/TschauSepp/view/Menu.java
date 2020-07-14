@@ -21,44 +21,32 @@ public class Menu extends JFrame {
 
     private BufferedImage bufferedImage = null;
 
-    private ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
+    private final ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
 
-    private SaveData saveData = new SaveData();
+    private final SaveData saveData = new SaveData();
 
-    private BackgroundJPanel backgroundPanel;
-    private JPanel einstellungsPanel;
-    private JButton einstellungen;
+    private final BackgroundJPanel backgroundPanel;
+    private final JPanel einstellungsPanel;
+    private final JButton einstellungen;
 
-    private JPanel starteinstellungen;
-    private JPanel comboboxPanel;
-    private JPanel playerPanel;
+    private final JPanel starteinstellungen;
+    private final JPanel comboboxPanel;
+    private final JPanel playerPanel;
 
-    private JComboBox deckart;
-    private String[] art = {
-            "Schweizer Deck",
-            "Französisches Deck"
-    };
+    private final JComboBox deckart;
 
-    private JComboBox anzspieler;
-    private String[] anzahl = {
-            "2 Spieler",
-            "3 Spieler",
-            "4 Spieler",
-            "5 Spieler",
-            "6 Spieler",
-            "7 Spieler"
-    };
+    private final JComboBox anzspieler;
 
-    private JTextField player1;
-    private JTextField player2;
+    private final JTextField player1;
+    private final JTextField player2;
     private JTextField player3;
     private JTextField player4;
     private JTextField player5;
     private JTextField player6;
     private JTextField player7;
 
-    private JPanel startPanel;
-    private JButton start;
+    private final JPanel startPanel;
+    private final JButton start;
 
     /**
      * Instantiates a new Menu.
@@ -80,7 +68,19 @@ public class Menu extends JFrame {
 
         starteinstellungen = new JPanel();
         comboboxPanel = new JPanel();
+        String[] art = {
+                "Schweizer Deck",
+                "Französisches Deck"
+        };
         deckart = new JComboBox(art);
+        String[] anzahl = {
+                "2 Spieler",
+                "3 Spieler",
+                "4 Spieler",
+                "5 Spieler",
+                "6 Spieler",
+                "7 Spieler"
+        };
         anzspieler = new JComboBox(anzahl);
         anzspieler.addActionListener(e -> MenuController.onAnzSelection(anzspieler, player3, player4, player5, player6, player7));
 

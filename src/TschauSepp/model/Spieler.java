@@ -97,7 +97,7 @@ public class Spieler extends Observable {
                 if (hand.size() == 0) {
                     spiel.rundeBeenden(this);
                 } else {
-                    spiel.nächsterSpieler();
+                    spiel.naechsterSpieler();
                 }
             }
     }
@@ -134,16 +134,16 @@ public class Spieler extends Observable {
             spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
 
             if (spiel.isAussetzen()) {
-                spiel.nächsterSpieler();
+                spiel.naechsterSpieler();
             } else {
                 check = true;
                 isCheckFalse(spiel);
             }
             if (check) {
-                spiel.nächsterSpieler();
+                spiel.naechsterSpieler();
             } else {
                 spiel.setAgain(false);
-                spiel.nächsterSpieler();
+                spiel.naechsterSpieler();
             }
         }
 
@@ -171,7 +171,7 @@ public class Spieler extends Observable {
             JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler().getName() + " du depp musst Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
-        spiel.nächsterSpieler();
+        spiel.naechsterSpieler();
 
     }
 
@@ -286,9 +286,8 @@ public class Spieler extends Observable {
      * Is check false boolean.
      *
      * @param spiel the spiel
-     * @return the boolean
      */
-    public boolean isCheckFalse(Spiel spiel) {
+    public void isCheckFalse(Spiel spiel) {
         for (int i = 0; i < spiel.getAktuellerSpieler().getHandSize(); i++) {
             if (spiel.getObersteKarte().getFarbe() == spiel.getAktuellerSpieler().hand.get(i).getFarbe()) {
                 check = false;
@@ -296,7 +295,6 @@ public class Spieler extends Observable {
                 check = false;
             }
         }
-        return check;
     }
 
     @Override

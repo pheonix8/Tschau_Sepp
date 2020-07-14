@@ -11,14 +11,14 @@ import java.util.Vector;
  */
 public class AblegeStapel {
 
-    private Vector<Karte> ablegestapel;
+    private final Vector<Karte> ablegestapel;
 
     /**
      * Instantiates a new Ablege stapel.
      */
     public AblegeStapel() {
 
-        ablegestapel = new Vector<Karte>();
+        ablegestapel = new Vector<>();
 
     }
 

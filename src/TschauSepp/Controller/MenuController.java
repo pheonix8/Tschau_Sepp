@@ -165,8 +165,8 @@ public class MenuController {
             kartenStapel.generiereDeckSchweiz();
             kartenStapel.kartenMischen();
         } else if (Objects.equals(kartendeck.getSelectedItem(), "Französisches Deck")) {
-            kartenStapel.generiereDeckFranzösisch();
-            kartenStapel.generiereDeckFranzösisch();
+            kartenStapel.generiereDeckFranzoesisch();
+            kartenStapel.generiereDeckFranzoesisch();
             kartenStapel.kartenMischen();
         }
 

@@ -20,33 +20,28 @@ import java.io.File;
  */
 public class Spielende extends JDialog {
 
-    private Spiel spiel;
-    private Spieler spieler;
-    private Menu menu;
+    private final Spieler spieler;
 
     private BufferedImage bufferedImage = null;
-    private BackgroundJPanel backgroundJPanel;
+    private final BackgroundJPanel backgroundJPanel;
 
-    private JPanel buttonPanel;
+    private final JPanel buttonPanel;
 
-    private JLabel name;
-    private JButton revanche;
-    private JButton fertig;
+    private final JLabel name;
+    private final JButton revanche;
+    private final JButton fertig;
 
     /**
      * Instantiates a new Spielende.
      *
      * @param spiel   the spiel
      * @param spieler the spieler
-     * @param menu    the menu
      */
-    public Spielende(Spiel spiel, Spieler spieler, Menu menu) {
+    public Spielende(Spiel spiel, Spieler spieler) {
 
         setTitle("Sieger");
 
-        this.spiel = spiel;
         this.spieler = spieler;
-        this.menu = menu;
 
         try {
             bufferedImage = ImageIO.read(new File("Hintergründe/sieger_hintergrund.png"));

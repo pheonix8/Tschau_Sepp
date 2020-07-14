@@ -108,31 +108,15 @@ public class SaveData {
 
             String[] settings = lines.toArray(String[]::new);
 
-            if (settings[0].equalsIgnoreCase("true")) {
-                nurEineRunde.setSelected(true);
-            } else {
-                nurEineRunde.setSelected(false);
-            }
+            nurEineRunde.setSelected(settings[0].equalsIgnoreCase("true"));
 
             maxPunkte.setText(settings[1]);
 
-            if (settings[2].equalsIgnoreCase("true")) {
-                freiwilligeAufnahme.setSelected(true);
-            } else {
-                freiwilligeAufnahme.setSelected(false);
-            }
+            freiwilligeAufnahme.setSelected(settings[2].equalsIgnoreCase("true"));
 
-            if (settings[3].equalsIgnoreCase("true")) {
-                aussetzen.setSelected(true);
-            } else {
-                aussetzen.setSelected(false);
-            }
+            aussetzen.setSelected(settings[3].equalsIgnoreCase("true"));
 
-            if (settings[4].equalsIgnoreCase("true")) {
-                keinDoppelbauer.setSelected(true);
-            } else {
-                keinDoppelbauer.setSelected(false);
-            }
+            keinDoppelbauer.setSelected(settings[4].equalsIgnoreCase("true"));
 
 
         } catch (IOException ex) {

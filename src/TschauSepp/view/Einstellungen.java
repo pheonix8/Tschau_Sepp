@@ -24,37 +24,31 @@ public class Einstellungen extends JDialog {
     private SaveData saveData;
 
 
-    private BackgroundJPanel backgroundPanel;
-    private JPanel regelnPanel;
+    private final BackgroundJPanel backgroundPanel;
+    private final JPanel regelnPanel;
 
-    private JLabel nurEineRunde;
-    private JCheckBox getnurEineRunde;
+    private final JLabel nurEineRunde;
+    private final JCheckBox getnurEineRunde;
 
-    private JLabel maxpunktzahl;
-    private JTextField maxpunkte;
+    private final JLabel maxpunktzahl;
+    private final JTextField maxpunkte;
 
     private JLabel hilfe;
     private JCheckBox gethilfe;
 
     private JLabel sprache;
     private JComboBox sprachen;
-    private String[] allesprachen = {
-            "Deutsch",
-            "Français",
-            "English"
 
-    };
+    private final JLabel freiwilligeAufnahme;
+    private final JCheckBox getfreiwilligeAufnahme;
 
-    private JLabel freiwilligeAufnahme;
-    private JCheckBox getfreiwilligeAufnahme;
+    private final JLabel aussetzenNachAufnahme;
+    private final JCheckBox getaussetzenNachAufnahme;
 
-    private JLabel aussetzenNachAufnahme;
-    private JCheckBox getaussetzenNachAufnahme;
+    private final JLabel keinDoppelbauer;
+    private final JCheckBox getkeinDoppelbauer;
 
-    private JLabel keinDoppelbauer;
-    private JCheckBox getkeinDoppelbauer;
-
-    private JButton speichern;
+    private final JButton speichern;
 
     /**
      * Instantiates a new Einstellungen.
@@ -82,6 +76,12 @@ public class Einstellungen extends JDialog {
         hilfe = new JLabel("Hilfe");
         gethilfe = new JCheckBox();
         sprache = new JLabel("Sprache");
+        String[] allesprachen = {
+                "Deutsch",
+                "Français",
+                "English"
+
+        };
         sprachen = new JComboBox(allesprachen);
         freiwilligeAufnahme = new JLabel("Freiwillige Aufnahme");
         getfreiwilligeAufnahme = new JCheckBox();
@@ -145,7 +145,6 @@ public class Einstellungen extends JDialog {
         regelnPanel.add(aussetzenNachAufnahme);
         aussetzenNachAufnahme.setForeground(Color.yellow);
         aussetzenNachAufnahme.setFont(new Font("Serif", Font.BOLD, 20));
-        ;
 
         regelnPanel.add(getaussetzenNachAufnahme);
         getaussetzenNachAufnahme.setOpaque(false);

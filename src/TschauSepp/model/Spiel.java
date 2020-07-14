@@ -34,13 +34,13 @@ public class Spiel extends Observable {
 
     private boolean spieltImUhrzeigersinn;
     private Spieler aktuellerSpieler;
-    private Vector<Spieler> alleSpieler;
-    private KartenStapel kartenStapel;
-    private AblegeStapel ablegeStapel;
+    private final Vector<Spieler> alleSpieler;
+    private final KartenStapel kartenStapel;
+    private final AblegeStapel ablegeStapel;
     private Karte obersteKarte;
 
     private SpielUI spielUI;
-    private Menu menu;
+    private final Menu menu;
 
     /**
      * Instantiates a new Spiel.
@@ -75,13 +75,13 @@ public class Spiel extends Observable {
             maxPunktzahl = 0;
         }
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
-            alleSpieler.get(i).setPunkte(0);
+        for (Spieler spieler : alleSpieler) {
+            spieler.setPunkte(0);
         }
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
-            alleSpieler.get(i).setHatTschau(false);
-            alleSpieler.get(i).setHatSepp(false);
+        for (Spieler spieler : alleSpieler) {
+            spieler.setHatTschau(false);
+            spieler.setHatSepp(false);
         }
 
         rundeStarten();
@@ -91,7 +91,7 @@ public class Spiel extends Observable {
     /**
      * Nächster spieler.
      */
-    public void nächsterSpieler() {
+    public void naechsterSpieler() {
 
         if (again) {
 
@@ -148,26 +148,26 @@ public class Spiel extends Observable {
 
         ablegeStapel.removeallKarten();
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
+        for (Spieler spieler : alleSpieler) {
 
-            for (int j = 0; j < alleSpieler.get(i).getHandSize(); j++) {
-                kartenStapel.addKarte(alleSpieler.get(i).getKarte(j));
+            for (int j = 0; j < spieler.getHandSize(); j++) {
+                kartenStapel.addKarte(spieler.getKarte(j));
             }
 
         }
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
+        for (Spieler spieler : alleSpieler) {
 
-            alleSpieler.get(i).removeallKarten();
+            spieler.removeallKarten();
 
         }
 
         kartenStapel.kartenMischen();
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
+        for (Spieler spieler : alleSpieler) {
 
             for (int j = 0; j < 7; j++) {
-                alleSpieler.get(i).addKarte(kartenStapel.getKarte(0));
+                spieler.addKarte(kartenStapel.getKarte(0));
                 kartenStapel.removebyIndex(0);
             }
 
@@ -190,12 +190,12 @@ public class Spiel extends Observable {
      */
     public void rundeBeenden(Spieler spieler) {
 
-        for (int i = 0; i < alleSpieler.size(); i++) {
+        for (Spieler value : alleSpieler) {
 
-            if (!alleSpieler.get(i).equals(spieler)) {
-                for (int j = 0; j < alleSpieler.get(i).getHandSize(); j++) {
+            if (!value.equals(spieler)) {
+                for (int j = 0; j < value.getHandSize(); j++) {
 
-                    spieler.addPunkte(alleSpieler.get(i).getKarte(j).getPunkte());
+                    spieler.addPunkte(value.getKarte(j).getPunkte());
 
                 }
             }
@@ -207,7 +207,7 @@ public class Spiel extends Observable {
         if (spieler.getPunkte() >= maxPunktzahl) {
             spielBeenden(spieler);
         } else {
-            RundenUbersicht rundenUbersicht = new RundenUbersicht(alleSpieler, this);
+            new RundenUbersicht(alleSpieler, this);
         }
     }
 
@@ -217,9 +217,7 @@ public class Spiel extends Observable {
      * @param spieler the spieler
      */
     public void spielBeenden(Spieler spieler) {
-
-        Spielende spielende = new Spielende(this, spieler, menu);
-
+        new Spielende(this, spieler);
     }
 
     /**
@@ -232,32 +230,16 @@ public class Spiel extends Observable {
 
             String[] settings = lines.toArray(String[]::new);
 
-            if (settings[0].equalsIgnoreCase("true")) {
-                nurEineRunde = true;
-            } else {
-                nurEineRunde = false;
-            }
+            nurEineRunde = settings[0].equalsIgnoreCase("true");
 
             String punkte = settings[1];
             maxPunktzahl = Integer.parseInt(punkte);
 
-            if (settings[2].equalsIgnoreCase("true")) {
-                freiwilligeAufnahme = true;
-            } else {
-                freiwilligeAufnahme = false;
-            }
+            freiwilligeAufnahme = settings[2].equalsIgnoreCase("true");
 
-            if (settings[3].equalsIgnoreCase("true")) {
-                aussetzen = true;
-            } else {
-                aussetzen = false;
-            }
+            aussetzen = settings[3].equalsIgnoreCase("true");
 
-            if (settings[4].equalsIgnoreCase("true")) {
-                keinDoppelbauer = true;
-            } else {
-                keinDoppelbauer = false;
-            }
+            keinDoppelbauer = settings[4].equalsIgnoreCase("true");
 
         } catch (IOException ex) {
             System.out.println("Unable to open file." + ex.toString());

@@ -15,19 +15,7 @@ public class Karte {
      */
     enum Farbe {
 
-        Rosen, Schilten, Eichel, Schellen, Ecke, Herz, Schaufel, Kreuz;
-
-        private static final Farbe[] farben = Farbe.values();
-
-        /**
-         * Gets farbe.
-         *
-         * @param i the
-         * @return the farbe
-         */
-        public static Farbe getFarbe(int i) {
-            return Farbe.farben[i];
-        }
+        Rosen, Schilten, Eichel, Schellen, Ecke, Herz, Schaufel, Kreuz
 
     }
 
@@ -36,7 +24,7 @@ public class Karte {
      */
     enum Wert {
 
-        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, König, As, Zehn, Bauer, Dame;
+        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, Koenig, As, Zehn, Bauer, Dame;
 
         private static final Wert[] wert = Wert.values();
 

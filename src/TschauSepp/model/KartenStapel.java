@@ -12,13 +12,13 @@ import java.util.Vector;
  */
 public class KartenStapel {
 
-    private Vector<Karte> kartenstapel;
+    private final Vector<Karte> kartenstapel;
 
     /**
      * Instantiates a new Karten stapel.
      */
     public KartenStapel() {
-        kartenstapel = new Vector<Karte>();
+        kartenstapel = new Vector<>();
     }
 
     /**
@@ -60,7 +60,6 @@ public class KartenStapel {
             j++;
             Karte karte9 = new Karte(farbe, Karte.Wert.getWert(j), 11);
             kartenstapel.add(karte9);
-            j = 0;
 
         }
 
@@ -69,7 +68,7 @@ public class KartenStapel {
     /**
      * Generiere deck französisch.
      */
-    public void generiereDeckFranzösisch() {
+    public void generiereDeckFranzoesisch() {
 
         Karte.Farbe[] farben = Karte.Farbe.values();
 
