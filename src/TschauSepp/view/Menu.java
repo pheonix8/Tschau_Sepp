@@ -19,64 +19,28 @@ import java.io.File;
  */
 public class Menu extends JFrame {
 
-    /**
-     * The Buffered image.
-     */
-    BufferedImage bufferedImage = null;
-    /**
-     * The Settingsicon.
-     */
-    ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
-    /**
-     * The Save data.
-     */
-    SaveData saveData = new SaveData();
+    private BufferedImage bufferedImage = null;
 
-    /**
-     * The Background panel.
-     */
-    BackgroundJPanel backgroundPanel;
+    private ImageIcon settingsicon = new ImageIcon("Hintergründe/Einstellungen_icon.png");
 
-    /**
-     * The Einstellungs panel.
-     */
-    JPanel einstellungsPanel;
+    private SaveData saveData = new SaveData();
 
-    /**
-     * The Einstellungen.
-     */
-    JButton einstellungen;
+    private BackgroundJPanel backgroundPanel;
+    private JPanel einstellungsPanel;
+    private JButton einstellungen;
 
-    /**
-     * The Starteinstellungen.
-     */
-    JPanel starteinstellungen;
+    private JPanel starteinstellungen;
+    private JPanel comboboxPanel;
+    private JPanel playerPanel;
 
-    /**
-     * The Combobox panel.
-     */
-    JPanel comboboxPanel;
-
-    /**
-     * The Deckart.
-     */
-    JComboBox deckart;
-    /**
-     * The Art.
-     */
-    String[] art = {
+    private JComboBox deckart;
+    private String[] art = {
             "Schweizer Deck",
             "Französisches Deck"
     };
 
-    /**
-     * The Anzspieler.
-     */
-    JComboBox anzspieler;
-    /**
-     * The Anzahl.
-     */
-    String[] anzahl = {
+    private JComboBox anzspieler;
+    private String[] anzahl = {
             "2 Spieler",
             "3 Spieler",
             "4 Spieler",
@@ -85,49 +49,16 @@ public class Menu extends JFrame {
             "7 Spieler"
     };
 
-    /**
-     * The Player panel.
-     */
-    JPanel playerPanel;
+    private JTextField player1;
+    private JTextField player2;
+    private JTextField player3;
+    private JTextField player4;
+    private JTextField player5;
+    private JTextField player6;
+    private JTextField player7;
 
-    /**
-     * The Player 1.
-     */
-    JTextField player1;
-    /**
-     * The Player 2.
-     */
-    JTextField player2;
-    /**
-     * The Player 3.
-     */
-    JTextField player3;
-    /**
-     * The Player 4.
-     */
-    JTextField player4;
-    /**
-     * The Player 5.
-     */
-    JTextField player5;
-    /**
-     * The Player 6.
-     */
-    JTextField player6;
-    /**
-     * The Player 7.
-     */
-    JTextField player7;
-
-    /**
-     * The Start panel.
-     */
-    JPanel startPanel;
-
-    /**
-     * The Start.
-     */
-    JButton start;
+    private JPanel startPanel;
+    private JButton start;
 
     /**
      * Instantiates a new Menu.
@@ -179,6 +110,7 @@ public class Menu extends JFrame {
         starteinstellungsPanel();
         lowerPanel();
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
     }

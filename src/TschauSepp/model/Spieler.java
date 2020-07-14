@@ -115,7 +115,7 @@ public class Spieler extends Observable {
         check = true;
         isCheckFalse(spiel);
 
-        if (spiel.isFreiwilligeAufnahme()) {
+        if (spiel.isFreiwilligeAufnahme() || !check) {
             check = true;
         }
 
@@ -162,13 +162,13 @@ public class Spieler extends Observable {
                 spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
                 spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
             }
-            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst Karten aufnehmen, das nächste Mal SEPP sagen", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler().getName() + " du depp musst Karten aufnehmen, das nächste Mal SEPP sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         } else if (spiel.getAktuellerSpieler().getHandSize() == 2) {
             for (int i = 0; i < 2; i++) {
                 spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
                 spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
             }
-            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler() + " du depp musst Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler().getName() + " du depp musst Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
         spiel.nächsterSpieler();

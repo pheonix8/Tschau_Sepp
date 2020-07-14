@@ -20,45 +20,18 @@ import java.io.File;
  */
 public class Spielende extends JDialog {
 
-    /**
-     * The Buffered image.
-     */
-    BufferedImage bufferedImage = null;
+    private Spiel spiel;
+    private Spieler spieler;
+    private Menu menu;
 
-    /**
-     * The Background j panel.
-     */
-    BackgroundJPanel backgroundJPanel;
-    /**
-     * The Button panel.
-     */
-    JPanel buttonPanel;
+    private BufferedImage bufferedImage = null;
+    private BackgroundJPanel backgroundJPanel;
 
-    /**
-     * The Name.
-     */
-    JLabel name;
-    /**
-     * The Revanche.
-     */
-    JButton revanche;
-    /**
-     * The Fertig.
-     */
-    JButton fertig;
+    private JPanel buttonPanel;
 
-    /**
-     * The Spiel.
-     */
-    Spiel spiel;
-    /**
-     * The Spieler.
-     */
-    Spieler spieler;
-    /**
-     * The Menu.
-     */
-    Menu menu;
+    private JLabel name;
+    private JButton revanche;
+    private JButton fertig;
 
     /**
      * Instantiates a new Spielende.
@@ -94,6 +67,7 @@ public class Spielende extends JDialog {
         add(backgroundJPanel);
         init();
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
 

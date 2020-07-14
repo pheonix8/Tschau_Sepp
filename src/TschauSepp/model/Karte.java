@@ -15,38 +15,7 @@ public class Karte {
      */
     enum Farbe {
 
-        /**
-         * Rosen farbe.
-         */
-        Rosen,
-        /**
-         * Schilten farbe.
-         */
-        Schilten,
-        /**
-         * Eichel farbe.
-         */
-        Eichel,
-        /**
-         * Schellen farbe.
-         */
-        Schellen,
-        /**
-         * Ecke farbe.
-         */
-        Ecke,
-        /**
-         * Herz farbe.
-         */
-        Herz,
-        /**
-         * Schaufel farbe.
-         */
-        Schaufel,
-        /**
-         * Kreuz farbe.
-         */
-        Kreuz;
+        Rosen, Schilten, Eichel, Schellen, Ecke, Herz, Schaufel, Kreuz;
 
         private static final Farbe[] farben = Farbe.values();
 
@@ -67,54 +36,7 @@ public class Karte {
      */
     enum Wert {
 
-        /**
-         * Sechs wert.
-         */
-        Sechs,
-        /**
-         * Sieben wert.
-         */
-        Sieben,
-        /**
-         * Acht wert.
-         */
-        Acht,
-        /**
-         * Neun wert.
-         */
-        Neun,
-        /**
-         * Banner wert.
-         */
-        Banner,
-        /**
-         * Under wert.
-         */
-        Under,
-        /**
-         * Ober wert.
-         */
-        Ober,
-        /**
-         * König wert.
-         */
-        König,
-        /**
-         * As wert.
-         */
-        As,
-        /**
-         * Zehn wert.
-         */
-        Zehn,
-        /**
-         * Bauer wert.
-         */
-        Bauer,
-        /**
-         * Dame wert.
-         */
-        Dame;
+        Sechs, Sieben, Acht, Neun, Banner, Under, Ober, König, As, Zehn, Bauer, Dame;
 
         private static final Wert[] wert = Wert.values();
 

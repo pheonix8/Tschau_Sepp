@@ -5,6 +5,7 @@ import TschauSepp.view.RundenUbersicht;
 import TschauSepp.view.SpielUI;
 import TschauSepp.view.Spielende;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -121,6 +122,7 @@ public class Spiel extends Observable {
                         }
                     }
                 }
+                JOptionPane.showMessageDialog(null, getAktuellerSpieler().getName() + " ist jetzt an der Reihe", "Nächster Spieler", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -130,6 +132,7 @@ public class Spiel extends Observable {
             aus = true;
         }
         again = true;
+
     }
 
     /**

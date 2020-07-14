@@ -19,101 +19,42 @@ import java.io.File;
  */
 public class Einstellungen extends JDialog {
 
-    /**
-     * The Buffered image.
-     */
-    BufferedImage bufferedImage = null;
-    /**
-     * The Save data.
-     */
-    SaveData saveData;
+    private BufferedImage bufferedImage = null;
 
-    /**
-     * The Background panel.
-     */
-    BackgroundJPanel backgroundPanel;
+    private SaveData saveData;
 
-    /**
-     * The Regeln panel.
-     */
-    JPanel regelnPanel;
 
-    /**
-     * The Nur eine runde.
-     */
-    JLabel nurEineRunde;
-    /**
-     * The Getnur eine runde.
-     */
-    JCheckBox getnurEineRunde;
+    private BackgroundJPanel backgroundPanel;
+    private JPanel regelnPanel;
 
-    /**
-     * The Maxpunktzahl.
-     */
-    JLabel maxpunktzahl;
-    /**
-     * The Maxpunkte.
-     */
-    JTextField maxpunkte;
+    private JLabel nurEineRunde;
+    private JCheckBox getnurEineRunde;
 
-    /**
-     * The Hilfe.
-     */
-    JLabel hilfe;
-    /**
-     * The Gethilfe.
-     */
-    JCheckBox gethilfe;
+    private JLabel maxpunktzahl;
+    private JTextField maxpunkte;
 
-    /**
-     * The Sprache.
-     */
-    JLabel sprache;
-    /**
-     * The Sprachen.
-     */
-    JComboBox sprachen;
-    /**
-     * The Allesprachen.
-     */
-    String[] allesprachen = {
+    private JLabel hilfe;
+    private JCheckBox gethilfe;
+
+    private JLabel sprache;
+    private JComboBox sprachen;
+    private String[] allesprachen = {
             "Deutsch",
             "Français",
             "English"
 
     };
 
-    /**
-     * The Freiwillige aufnahme.
-     */
-    JLabel freiwilligeAufnahme;
-    /**
-     * The Getfreiwillige aufnahme.
-     */
-    JCheckBox getfreiwilligeAufnahme;
+    private JLabel freiwilligeAufnahme;
+    private JCheckBox getfreiwilligeAufnahme;
 
-    /**
-     * The Aussetzen nach aufnahme.
-     */
-    JLabel aussetzenNachAufnahme;
-    /**
-     * The Getaussetzen nach aufnahme.
-     */
-    JCheckBox getaussetzenNachAufnahme;
+    private JLabel aussetzenNachAufnahme;
+    private JCheckBox getaussetzenNachAufnahme;
 
-    /**
-     * The Kein doppelbauer.
-     */
-    JLabel keinDoppelbauer;
-    /**
-     * The Getkein doppelbauer.
-     */
-    JCheckBox getkeinDoppelbauer;
+    private JLabel keinDoppelbauer;
+    private JCheckBox getkeinDoppelbauer;
 
-    /**
-     * The Speichern.
-     */
-    JButton speichern;
+    private JButton speichern;
 
     /**
      * Instantiates a new Einstellungen.

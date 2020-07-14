@@ -13,7 +13,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Vector;
 
 /**
  * Project Tschau_Sepp
@@ -26,159 +28,49 @@ public class SpielUI extends JFrame implements Observer {
 
     private Spiel spiel;
     private Spieler spieler;
-
     private Vector<Spieler> allespieler;
+    private BufferedImage bufferedImage = null;
 
-    /**
-     * The Buffered image.
-     */
-    BufferedImage bufferedImage = null;
+    private BackgroundJPanel backgroundJPanel;
 
-    /**
-     * The Background j panel.
-     */
-    BackgroundJPanel backgroundJPanel;
+    private JPanel upperPanel;
 
-    /**
-     * The Upper panel.
-     */
-    JPanel upperPanel;
+    private JLabel name;
+    private Punkteliste punkteliste;
 
-    /**
-     * The Name.
-     */
-    JLabel name;
-    /**
-     * The Punkteliste.
-     */
-    JPanel punkteliste;
-    /**
-     * The Punkte 1.
-     */
-    JTextField punkte1, /**
-     * The Punkte 2.
-     */
-    punkte2, /**
-     * The Punkte 3.
-     */
-    punkte3, /**
-     * The Punkte 4.
-     */
-    punkte4, /**
-     * The Punkte 5.
-     */
-    punkte5, /**
-     * The Punkte 6.
-     */
-    punkte6, /**
-     * The Punkte 7.
-     */
-    punkte7;
+    private JPanel centerPanel;
 
-    /**
-     * The Center panel.
-     */
-    JPanel centerPanel;
+    private JPanel centerStapelPanel;
+    private JPanel centerTopPanel;
+    private JPanel centerLeftPanel;
+    private JPanel centerRightPanel;
 
-    /**
-     * The Center stapel panel.
-     */
-    JPanel centerStapelPanel;
-    /**
-     * The Kartenstapel.
-     */
-    JLabel kartenstapel;
-    /**
-     * The Ablegestapel.
-     */
-    JLabel ablegestapel;
+    private JLabel kartenstapel;
+    private JLabel ablegestapel;
 
-    /**
-     * The Center top panel.
-     */
-    JPanel centerTopPanel;
-    /**
-     * The Oberer spieler 1.
-     */
-    JLabel obererSpieler1;
-    /**
-     * The Oberer spieler 2.
-     */
-    JLabel obererSpieler2;
+    private JLabel obererSpieler1;
+    private JLabel obererSpieler2;
 
-    /**
-     * The Center left panel.
-     */
-    JPanel centerLeftPanel;
-    /**
-     * The Linker spieler 1.
-     */
-    JLabel linkerSpieler1;
-    /**
-     * The Linker spieler 2.
-     */
-    JLabel linkerSpieler2;
+    private JLabel linkerSpieler1;
+    private JLabel linkerSpieler2;
 
-    /**
-     * The Center right panel.
-     */
-    JPanel centerRightPanel;
-    /**
-     * The Rechter spieler 1.
-     */
-    JLabel rechterSpieler1;
-    /**
-     * The Rechter spieler 2.
-     */
-    JLabel rechterSpieler2;
+    private JLabel rechterSpieler1;
+    private JLabel rechterSpieler2;
 
-    /**
-     * The Lower panel.
-     */
-    JPanel lowerPanel;
+    private JPanel lowerPanel;
+    private JPanel kartenPanel;
+    private JPanel leftbuttonPanel;
+    private JPanel rightbuttonPanel;
 
-    /**
-     * The Karten panel.
-     */
-    JPanel kartenPanel;
-    /**
-     * The Karten liste.
-     */
-    JList kartenListe;
-    /**
-     * The Scroll pane.
-     */
-    JScrollPane scrollPane;
-    /**
-     * The Default list model.
-     */
-    DefaultListModel<ImageIcon> defaultListModel;
+    private JList kartenListe;
+    private JScrollPane scrollPane;
+    private DefaultListModel<ImageIcon> defaultListModel;
 
-    /**
-     * The Leftbutton panel.
-     */
-    JPanel leftbuttonPanel;
-    /**
-     * The Setzen.
-     */
-    JButton setzen;
-    /**
-     * The Ziehen.
-     */
-    JButton ziehen;
+    private JButton setzen;
+    private JButton ziehen;
 
-    /**
-     * The Rightbutton panel.
-     */
-    JPanel rightbuttonPanel;
-    /**
-     * The Tschau.
-     */
-    JButton tschau;
-    /**
-     * The Sepp.
-     */
-    JButton sepp;
+    private JButton tschau;
+    private JButton sepp;
 
     /**
      * Instantiates a new Spiel ui.
@@ -203,30 +95,16 @@ public class SpielUI extends JFrame implements Observer {
         backgroundJPanel = new BackgroundJPanel();
 
         upperPanel = new JPanel();
-        upperPanel.addMouseListener(new MouseAdapter() {
+
+        name = new JLabel();
+
+        punkteliste = new Punkteliste(allespieler, spiel);
+        punkteliste.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Uebersicht uebersicht = new Uebersicht(allespieler, spiel);
             }
         });
-
-        name = new JLabel();
-
-        punkteliste = new JPanel();
-        punkte1 = new JTextField();
-        punkte2 = new JTextField();
-        punkte3 = new JTextField();
-        punkte4 = new JTextField();
-        punkte5 = new JTextField();
-        punkte6 = new JTextField();
-        punkte7 = new JTextField();
-        punkte1.setEditable(false);
-        punkte2.setEditable(false);
-        punkte3.setEditable(false);
-        punkte4.setEditable(false);
-        punkte5.setEditable(false);
-        punkte6.setEditable(false);
-        punkte7.setEditable(false);
 
         centerPanel = new JPanel();
 
@@ -279,6 +157,7 @@ public class SpielUI extends JFrame implements Observer {
         drawCenterpanel();
         drawLowerpanel();
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
 
@@ -288,13 +167,6 @@ public class SpielUI extends JFrame implements Observer {
      * Draw upperpanel.
      */
     public void drawUpperpanel() {
-
-        Collections.sort(allespieler, new Comparator<Spieler>() {
-            @Override
-            public int compare(Spieler o1, Spieler o2) {
-                return o2.getPunkte() - o1.getPunkte();
-            }
-        });
 
         Border upperborder = BorderFactory.createEmptyBorder(15, 30, 0, 30);
 
@@ -306,109 +178,7 @@ public class SpielUI extends JFrame implements Observer {
         name.setForeground(Color.yellow);
         name.setFont(new Font("Serif", Font.BOLD, 30));
 
-        GridLayout punkteLayout = new GridLayout();
-        punkteLayout.setVgap(5);
-        punkteLayout.setHgap(5);
-
-        if (allespieler.size() == 2){
-            punkteLayout = new GridLayout(2,1);
-        } else if (allespieler.size() == 3){
-            punkteLayout = new GridLayout(3,1);
-        } else if (allespieler.size() == 4){
-            punkteLayout = new GridLayout(4,1);
-        } else if (allespieler.size() == 5){
-            punkteLayout = new GridLayout(5,1);
-        } else if (allespieler.size() == 6){
-            punkteLayout = new GridLayout(6,1);
-        } else {
-            punkteLayout = new GridLayout(7,1);
-        }
-
-        Border punkteborder = BorderFactory.createEmptyBorder(10,10,10,10);
-
-        punkteliste.setBackground(Color.DARK_GRAY);
-        punkteliste.setLayout(punkteLayout);
-        punkteliste.setBorder(punkteborder);
-        punkteliste.setPreferredSize(new Dimension(200,275));
-
-        if (allespieler.size() == 2){
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-
-        } else if (allespieler.size() == 3){
-
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-            punkteliste.add(punkte3);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-            punkte3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
-
-        } else if (allespieler.size() == 4){
-
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-            punkteliste.add(punkte3);
-            punkteliste.add(punkte4);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-            punkte3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
-            punkte4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
-
-        } else if (allespieler.size() == 5){
-
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-            punkteliste.add(punkte3);
-            punkteliste.add(punkte4);
-            punkteliste.add(punkte5);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-            punkte3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
-            punkte4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
-            punkte5.setText(allespieler.get(4).getName() + " : " + Integer.toString(allespieler.get(4).getPunkte()));
-
-        } else if (allespieler.size() == 6){
-
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-            punkteliste.add(punkte3);
-            punkteliste.add(punkte4);
-            punkteliste.add(punkte5);
-            punkteliste.add(punkte6);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-            punkte3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
-            punkte4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
-            punkte5.setText(allespieler.get(4).getName() + " : " + Integer.toString(allespieler.get(4).getPunkte()));
-            punkte6.setText(allespieler.get(5).getName() + " : " + Integer.toString(allespieler.get(5).getPunkte()));
-
-        } else {
-
-            punkteliste.add(punkte1);
-            punkteliste.add(punkte2);
-            punkteliste.add(punkte3);
-            punkteliste.add(punkte4);
-            punkteliste.add(punkte5);
-            punkteliste.add(punkte6);
-            punkteliste.add(punkte7);
-
-            punkte1.setText(allespieler.get(0).getName() + " : " + Integer.toString(allespieler.get(0).getPunkte()));
-            punkte2.setText(allespieler.get(1).getName() + " : " + Integer.toString(allespieler.get(1).getPunkte()));
-            punkte3.setText(allespieler.get(2).getName() + " : " + Integer.toString(allespieler.get(2).getPunkte()));
-            punkte4.setText(allespieler.get(3).getName() + " : " + Integer.toString(allespieler.get(3).getPunkte()));
-            punkte5.setText(allespieler.get(4).getName() + " : " + Integer.toString(allespieler.get(4).getPunkte()));
-            punkte6.setText(allespieler.get(5).getName() + " : " + Integer.toString(allespieler.get(5).getPunkte()));
-            punkte7.setText(allespieler.get(6).getName() + " : " + Integer.toString(allespieler.get(6).getPunkte()));
-
-        }
+        punkteliste.addButton().setPreferredSize(new Dimension(200, 275));
 
         upperPanel.add(name, BorderLayout.WEST);
         upperPanel.add(punkteliste, BorderLayout.EAST);
