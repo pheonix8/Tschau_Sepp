@@ -192,6 +192,8 @@ public class SpielUI extends JFrame implements Observer {
      */
     public void drawCenterpanel() {
 
+        //Todo Karten anpassen
+
         Border centerborder = BorderFactory.createEmptyBorder(0, 544, 0, 544);
 
         centerPanel.setBorder(centerborder);
@@ -343,6 +345,8 @@ public class SpielUI extends JFrame implements Observer {
      * Draw lowerpanel.
      */
     public void drawLowerpanel() {
+
+        //Todo Karten anpassen
 
         Border lowerborder = BorderFactory.createEmptyBorder(0, 450, 10, 450);
 

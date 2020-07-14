@@ -17,7 +17,7 @@ public class StartApp {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        new Menu();
     }
 
 }

@@ -5,6 +5,7 @@ import TschauSepp.view.Einstellungen;
 import TschauSepp.view.Menu;
 
 import javax.swing.*;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -22,7 +23,7 @@ public class MenuController {
      * @param saveData the save data
      */
     public static void onClickEinstellungen(SaveData saveData) {
-        Einstellungen einstellungen = new Einstellungen(saveData);
+        new Einstellungen(saveData);
     }
 
     /**
@@ -71,7 +72,7 @@ public class MenuController {
             player6.setVisible(false);
             player7.setVisible(false);
 
-        } else if (anzspieler.getSelectedIndex() == 2){
+        } else if (anzspieler.getSelectedIndex() == 2) {
 
             player3.setVisible(true);
             player4.setVisible(true);
@@ -80,7 +81,7 @@ public class MenuController {
             player6.setVisible(false);
             player7.setVisible(false);
 
-        } else if (anzspieler.getSelectedIndex() == 3){
+        } else if (anzspieler.getSelectedIndex() == 3) {
 
             player3.setVisible(true);
             player5.setVisible(true);
@@ -130,34 +131,28 @@ public class MenuController {
         KartenStapel kartenStapel = new KartenStapel();
         AblegeStapel ablegeStapel = new AblegeStapel();
 
-        if (anzahlspieler.getSelectedItem().equals("2 Spieler")) {
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("3 Spieler")) {
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
+        allespieler.add(new Spieler(player1.getText()));
+        allespieler.add(new Spieler(player2.getText()));
+
+        if (Objects.equals(anzahlspieler.getSelectedItem(), "3 Spieler")) {
             allespieler.add(new Spieler(player3.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("4 Spieler")) {
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
+        }
+        if (Objects.equals(anzahlspieler.getSelectedItem(), "4 Spieler")) {
             allespieler.add(new Spieler(player3.getText()));
             allespieler.add(new Spieler(player4.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("5 Spieler")) {
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
+        }
+        if (Objects.equals(anzahlspieler.getSelectedItem(), "5 Spieler")) {
             allespieler.add(new Spieler(player3.getText()));
             allespieler.add(new Spieler(player4.getText()));
             allespieler.add(new Spieler(player5.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("6 Spieler")){
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
+        }
+        if (Objects.equals(anzahlspieler.getSelectedItem(), "6 Spieler")) {
             allespieler.add(new Spieler(player3.getText()));
             allespieler.add(new Spieler(player4.getText()));
             allespieler.add(new Spieler(player5.getText()));
             allespieler.add(new Spieler(player6.getText()));
-        } else if (anzahlspieler.getSelectedItem().equals("7 Spieler")){
-            allespieler.add(new Spieler(player1.getText()));
-            allespieler.add(new Spieler(player2.getText()));
+        }
+        if (Objects.equals(anzahlspieler.getSelectedItem(), "7 Spieler")) {
             allespieler.add(new Spieler(player3.getText()));
             allespieler.add(new Spieler(player4.getText()));
             allespieler.add(new Spieler(player5.getText()));
@@ -165,11 +160,11 @@ public class MenuController {
             allespieler.add(new Spieler(player7.getText()));
         }
 
-        if (kartendeck.getSelectedItem().equals("Schweizer Deck")){
+        if (Objects.equals(kartendeck.getSelectedItem(), "Schweizer Deck")) {
             kartenStapel.generiereDeckSchweiz();
             kartenStapel.generiereDeckSchweiz();
             kartenStapel.kartenMischen();
-        } else if (kartendeck.getSelectedItem().equals("Französisches Deck")){
+        } else if (Objects.equals(kartendeck.getSelectedItem(), "Französisches Deck")) {
             kartenStapel.generiereDeckFranzösisch();
             kartenStapel.generiereDeckFranzösisch();
             kartenStapel.kartenMischen();

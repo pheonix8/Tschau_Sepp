@@ -210,7 +210,7 @@ public class SpielController {
      */
     public static void onClickBeenden(Spielende spielende) {
         spielende.dispose();
-        Menu menu = new Menu();
+        new Menu();
     }
 
     /**
