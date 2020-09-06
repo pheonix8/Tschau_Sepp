@@ -354,4 +354,15 @@ public class Spiel extends Observable {
     public void setAgain(boolean again) {
         this.again = again;
     }
+
+    public void stapelEmpty() {
+        if (getKartenStapel().getSize() == 0) {
+            for (int i = 1; i < getAblegeStapel().getSize() - 1; i++) {
+                getKartenStapel().addKarte(getAblegeStapel().getKarte(i));
+                kartenStapel.kartenMischen();
+            }
+            getAblegeStapel().removeallKarten();
+            getAblegeStapel().addKarte(getObersteKarte());
+        }
+    }
 }

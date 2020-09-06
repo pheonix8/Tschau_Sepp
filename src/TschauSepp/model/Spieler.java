@@ -76,30 +76,30 @@ public class Spieler extends Observable {
      */
     public void KarteLegen(Karte karte, Spiel spiel, Spieler spieler) {
 
-            if (karte.getFarbe() == spiel.getObersteKarte().getFarbe() || karte.getWert() == spiel.getObersteKarte().getWert()) {
+        if (karte.getFarbe() == spiel.getObersteKarte().getFarbe() || karte.getWert() == spiel.getObersteKarte().getWert()) {
 
-                if (spiel.getAktuellerSpieler().getHandSize() == 2 && !spiel.getAktuellerSpieler().isHatTschau()) {
-                    spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
-                }
-
-                if (spiel.getAktuellerSpieler().getHandSize() == 1 && !spiel.getAktuellerSpieler().isHatSepp()) {
-                    spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
-                }
-
-                spiel.getAblegeStapel().addKarte(karte);
-                hand.remove(karte);
-                spiel.setObersteKarte(karte);
-
-                if (karte.getPunkte() == 10) {
-                    spiel.setSpieltImUhrzeigersinn(!spiel.isSpieltImUhrzeigersinn());
-                }
-
-                if (hand.size() == 0) {
-                    spiel.rundeBeenden(this);
-                } else {
-                    spiel.naechsterSpieler();
-                }
+            if (spiel.getAktuellerSpieler().getHandSize() == 2 && !spiel.getAktuellerSpieler().isHatTschau()) {
+                spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
             }
+
+            if (spiel.getAktuellerSpieler().getHandSize() == 1 && !spiel.getAktuellerSpieler().isHatSepp()) {
+                spiel.getAktuellerSpieler().bestrafung(spiel, spieler);
+            }
+
+            spiel.getAblegeStapel().addKarte(karte);
+            hand.remove(karte);
+            spiel.setObersteKarte(karte);
+
+            if (karte.getPunkte() == 10) {
+                spiel.setSpieltImUhrzeigersinn(!spiel.isSpieltImUhrzeigersinn());
+            }
+
+            if (hand.size() == 0) {
+                spiel.rundeBeenden(this);
+            } else {
+                spiel.naechsterSpieler();
+            }
+        }
     }
 
     /**
@@ -130,6 +130,8 @@ public class Spieler extends Observable {
                 sepp.setForeground(Color.black);
             }
 
+            spiel.stapelEmpty();
+
             spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
             spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
 
@@ -158,12 +160,14 @@ public class Spieler extends Observable {
     public void bestrafung(Spiel spiel, Spieler spieler) {
 
         if (spiel.getAktuellerSpieler().getHandSize() == 1) {
+            spiel.stapelEmpty();
             for (int i = 0; i < 3; i++) {
                 spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
                 spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
             }
             JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler().getName() + " du depp musst Karten aufnehmen, das nächste Mal SEPP sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         } else if (spiel.getAktuellerSpieler().getHandSize() == 2) {
+            spiel.stapelEmpty();
             for (int i = 0; i < 2; i++) {
                 spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
                 spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
@@ -301,4 +305,6 @@ public class Spieler extends Observable {
     public String toString() {
         return "" + name + " " + hand;
     }
+
+
 }
