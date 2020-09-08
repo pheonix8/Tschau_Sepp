@@ -89,10 +89,7 @@ public class Spieler extends Observable {
             hand.remove(karte);
             spiel.setObersteKarte(karte);
 
-            if (karte.getPunkte() == 7) {
 
-
-            }
 
             if (karte.getPunkte() == 10) {
                 spiel.setSpieltImUhrzeigersinn(!spiel.isSpieltImUhrzeigersinn());
