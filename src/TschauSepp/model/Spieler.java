@@ -89,12 +89,18 @@ public class Spieler extends Observable {
             hand.remove(karte);
             spiel.setObersteKarte(karte);
 
+            if (karte.getPunkte() == 7) {
+
+
+            }
+
             if (karte.getPunkte() == 10) {
                 spiel.setSpieltImUhrzeigersinn(!spiel.isSpieltImUhrzeigersinn());
             }
             if (hand.size() == 0) {
                 spiel.rundeBeenden(this);
             } else {
+                spiel.setCheck(true);
                 spiel.naechsterSpieler();
             }
         }
@@ -113,7 +119,7 @@ public class Spieler extends Observable {
         check = true;
         isCheckFalse(spiel);
 
-        if (spiel.isFreiwilligeAufnahme() || !check) {
+        if (spiel.isFreiwilligeAufnahme()) {
             check = true;
         }
 
@@ -133,15 +139,14 @@ public class Spieler extends Observable {
             spieler.hand.add(spiel.getKartenStapel().getKarte(spiel.getKartenStapel().getSize() - 1));
             spiel.getKartenStapel().removeKarte(spieler.hand.get(spieler.hand.size() - 1));
 
-            if (spiel.isAussetzen()) {
-                spiel.naechsterSpieler();
-            } else {
+            if (!spiel.isAussetzen()) {
                 check = true;
                 isCheckFalse(spiel);
+                if (!check) {
+                    spiel.setAgain(false);
+                }
             }
-            if (!check) {
-                spiel.setAgain(false);
-            }
+            spiel.setCheck(false);
             spiel.naechsterSpieler();
         }
 
@@ -170,8 +175,6 @@ public class Spieler extends Observable {
             }
             JOptionPane.showMessageDialog(null, spiel.getAktuellerSpieler().getName() + " du depp musst Karten aufnehmen, das nächste Mal Tschau sagen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-
-        spiel.naechsterSpieler();
 
     }
 
@@ -291,8 +294,10 @@ public class Spieler extends Observable {
         for (int i = 0; i < spiel.getAktuellerSpieler().getHandSize(); i++) {
             if (spiel.getObersteKarte().getFarbe() == spiel.getAktuellerSpieler().hand.get(i).getFarbe()) {
                 check = false;
+                break;
             } else if (spiel.getObersteKarte().getWert() == spiel.getAktuellerSpieler().hand.get(i).getWert()) {
                 check = false;
+                break;
             }
         }
     }

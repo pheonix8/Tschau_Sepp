@@ -28,6 +28,7 @@ public class Spiel extends Observable {
     private boolean aussetzen;
     private boolean keinDoppelbauer;
 
+    private boolean check;
     private boolean aus;
     private int auslassen;
     private boolean again;
@@ -126,12 +127,40 @@ public class Spiel extends Observable {
             }
         }
 
+        if (getObersteKarte().getPunkte() == 7 && check) {
+            siebenRegel();
+        }
+
         setChanged();
         notifyObservers(aktuellerSpieler);
         if (auslassen == 1 || auslassen == 2) {
             aus = true;
         }
         again = true;
+
+    }
+
+    /**
+     * Sieben regel.
+     */
+    public void siebenRegel() {
+
+        check = true;
+        for (int i = 0; i < getAktuellerSpieler().getHandSize(); i++) {
+            if (getObersteKarte().getWert() == getAktuellerSpieler().getKarte(i).getWert()) {
+                check = false;
+                break;
+            }
+        }
+
+        if (check) {
+            JOptionPane.showMessageDialog(null, "Es wurde eine Sieben gelegt, du musst aufnehmen.", "Sieben Regel", JOptionPane.WARNING_MESSAGE);
+            stapelEmpty();
+            for (int i = 0; i < 2; i++) {
+                aktuellerSpieler.addKarte(getKartenStapel().getKarte(getKartenStapel().getSize() - 1));
+                getKartenStapel().removeKarte(aktuellerSpieler.getKarte(aktuellerSpieler.getHandSize() - 1));
+            }
+        }
 
     }
 
@@ -338,15 +367,6 @@ public class Spiel extends Observable {
     }
 
     /**
-     * Is again boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isAgain() {
-        return again;
-    }
-
-    /**
      * Sets again.
      *
      * @param again the again
@@ -355,6 +375,18 @@ public class Spiel extends Observable {
         this.again = again;
     }
 
+    /**
+     * Sets check.
+     *
+     * @param check the check
+     */
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    /**
+     * Stapel empty.
+     */
     public void stapelEmpty() {
         if (getKartenStapel().getSize() == 0) {
             for (int i = 1; i < getAblegeStapel().getSize() - 1; i++) {
